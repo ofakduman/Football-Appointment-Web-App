@@ -1,3 +1,3 @@
 # Project
  Software Engineering
- 					by Ölüm Grubu
+ 					by Football Appoinment App Group
