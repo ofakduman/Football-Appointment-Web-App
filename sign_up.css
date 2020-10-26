@@ -1,10 +1,10 @@
 body{
-    background: url(background-photos/backg_10.jpg) no-repeat;
+    background: url(background-photos/backg_2.jpg) no-repeat;
     background-size: cover;
 }
 .login-box{
     position: absolute;
-    top: 20%;
+    top: 10%;
     left: 10%;
 }
 .textbox{
