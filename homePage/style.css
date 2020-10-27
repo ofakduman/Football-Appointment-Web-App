@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+body {
+	margin: 0;
+	background: #222;
+	font-family: 'Work Sans', sans-serif;
+    font-weight: 800;
+    padding-left: 0;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-top: 20;
+    z-index: 1;
+    position: relative;
+
+}
+
+header {
+    background: #55d6aa;
+}
+
+header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+
+nav {
+  float: left;
+  padding-left: 0;
+}
+
+nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: block;
+  margin-left: 0px;
+  padding-left: 0px;
+  padding-top: 20;
+
+  position: relative;
+}
+
+nav a {
+    border: 1px solid transparent;
+    transition: 0.45s ease;
+    margin: 0 .3em;
+    color: #444;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: inline-block;
+  padding: 5px 20px;
+ 
+}
+
+nav a:hover {
+  color: #000;
+}
+
+
+
+nav a:hover {
+  background-color: #000;
+  color: #fff;
+}
+.login{
+    
+    text-decoration: none;
+    color: white;
+    position: absolute;
+    right: 0%;
+    margin-top: 7;
+    display: inline-flex;
+}
+
+.signin::after{
+    content: '';
+  display: block;
+  height: 5px;
+  background-color: #444;
+
+  position: absolute;
+  top: 40;
+  width: 0%;
+
+  transition: 500ms;
+}
+.signin:hover::after{
+    width: 100%;
+}
+
+.signup::after{
+    content: '';
+  display: block;
+  height: 5px;
+  background-color: #444;
+
+  position: absolute;
+  top: 40;
+  width: 0%;
+
+  transition: 500ms;
+}
+.signup:hover{
+    background-color: #000;
+    color: #fff;
+}
+.title{
+    position: absolute;
+    top: 0%;
+    left: 45%;
+}
