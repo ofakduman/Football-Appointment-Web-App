@@ -1,5 +1,5 @@
 body{
-    background: url(background-photos/backg_2.jpg) no-repeat;
+    background: url(/background-photos/backg_2.jpg) no-repeat;
     background-size: cover;
 }
 .login-box{
