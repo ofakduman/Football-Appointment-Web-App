@@ -6,18 +6,23 @@
     color: #00ff7c;
 }
 body{
-    min-height: 100vh;
-    display: flex;
+    min-height: 120vh;
+    min-width: 100vh;
+    max-height: 200vh;
+    //display: flex;
     align-items: center;
     justify-content: center;
     background-color: #363946;
 }
 .about{
     background: url(6.jpg) no-repeat left;
-    background-size: 55%;
+    background-size: 65%;
     background-color: #303545;
     overflow: hidden;
-    padding: 100px 0;
+    padding: 110px 100px;
+    padding-bottom: 100px;
+    padding-right: 0px;
+
 }
 .inner-section{
     width: 55%;
