@@ -1,5 +1,5 @@
 body{
-    background: url(background-photos/backg_10.jpg) no-repeat;
+    background: url(backg_10.jpg) no-repeat;
     background-size: cover;
 }
 .login-box{
@@ -40,3 +40,4 @@ body{
     cursor: pointer;
     margin: 12px 0;
   }
+  
