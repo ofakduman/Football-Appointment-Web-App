@@ -1,0 +1,133 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .theme-light {
+    --background-primary: url(2b.jpg);
+    --background-size-primary : cover ;
+    --color-primary: #0060df;
+    --color-secondary: #fbfbfe;
+    --color-accent: #fd6f53;
+    --font-color: #000000;
+  }
+  .theme-dark {
+    --background-primary: url(09.jpg);
+    --background-size-primary : cover ;
+    --color-primary: #17ed90;
+    --color-secondary: #12cdea;
+    
+    --color-accent: #5364fd;
+    --font-color: #ffffff;
+  }
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: var(--background-primary);
+    background-size: var(--background-size-primary);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .container h1 {
+    color: var(--font-color);
+  }
+  .container button {
+    color: var(--font-color);
+    background: var(--color-primary);
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 5px;
+  } 
+  #switch{
+      position: absolute;
+      top: 85%;
+      left: 46%;
+  }
+  .GoalRanking{
+      color: var(--color-accent);
+      position: absolute;
+      top: 40%;
+      left: 10%;
+      list-style-type: decimal;
+      font-size: 30px;
+      
+      
+  }
+  .Title-Goal{
+    color: var(--color-accent);
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      font-size: 30px;
+  }
+  .TeamRanking{
+    color: var(--color-accent);
+    position: absolute;
+    top: 40%;
+    left: 75%;
+    list-style-type: decimal;
+    font-size: 30px;
+    
+    
+}
+.Title-Team{
+  color: var(--color-accent);
+    position: absolute;
+    top: 30%;
+    left: 75%;
+    font-size: 30px;
+}
+  li{
+    border: var(--font-color);
+    border-style: inset;
+    border-width: medium;
+  }
+  .Slogan{
+      color: var(--color-accent);
+      position: absolute;
+      top: 10%;
+      left: 40%;
+      font-size: 50px;
+  }
+  /* Style the search field */
+form.example input[type=text] {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  float: left;
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  width: 20%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.example button {
+  position: absolute;
+  top: 30%;
+  left: 62%;
+  float: left;
+  width: 5%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
