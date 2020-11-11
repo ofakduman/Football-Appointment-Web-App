@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <script>
+        function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+    </script>
+    <link rel="stylesheet" href="{{url_for('static',filename='style_signin.css')}}">
+    
+</head>
+<div class ="logo"><a href ="#"><img src ="{{ url_for('static', filename='images/logo.png')}}"></a></div>
+<div class ="menu-bar">
+    <ul>
+        <li><a href="/homepage">HOMEPAGE</a></li>
+        <li><a href="/signin">SIGN IN</a></li>
+        <li><a href="/signup">SIGN UP</a></li>
+        <li><a href="/appointment">APPOINTMENT</a></li>
+        <li><a href="/aboutus">ABOUT US</a></li>
+        <li><a href="/contactus">CONTACT</a></li>
+    </ul>
+</div>
+<body style="background: url(/static/backg_10.jpg);
+      background-size: cover;">
+<div class="login-box">
+  <h1 style="color:greenyellow;">Login</h1>
+  <div class="textbox">
+    <i class="fas fa-user"></i>
+    <input type="text" placeholder="Username">
+  </div>
+  <br>
+  <div class="textbox">
+    <i class="fas fa-lock"></i>
+    
+ <input type="password" value="FakePSW" id="myInput" placeholder="Password">
+
+  </div>
+  <br>
+  <input type="checkbox" onclick="myFunction()" > 
+
+  <br>
+  <input type="button" class="btn" value="Sign in">
+</div>
+  </body>
+</html>
