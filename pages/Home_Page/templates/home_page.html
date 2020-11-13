@@ -1,71 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" class="theme-light">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/static/style.css" type="text/css" />
-    <link rel="stylesheet" href="/static/theme.js" type="text/css" />
-
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Home Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
-
 <body>
-    <div class="container">
-        <button id="switch" onclick="toggleTheme()">Switch</button>
+    <div class="container1">
+        <img src="/static/halısaha.jpg" alt="" class="Image1">
+        <img src="/static/halısaha3.jpg" alt="" class="Image2">
+        <img src="/static/halısaha2.jpg" alt="" class="Image3">
         
-        <p class="Title-Goal">Goal Ranking</p>
-        <ul class ="GoalRanking">
-            <li>Yiğit</li>
-            <li>Musa</li>
-            <li>Erdi</li>
-            <li>Muhammed</li>
-            <li>Ömer Faruk</li>
-          </ul>
-          <p class="Title-Team">Goal Ranking</p>
-          <ul class ="TeamRanking">
-              <li>Bayern Münih</li>
-              <li>Liverpool</li>
-              <li>Manchester City</li>
-              <li>Real Madrid</li>
-              <li>Barcelona</li>
-            </ul>
-            <!-- Load icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!-- The form -->
-<form class="example" action="action_page.php">
-  <input type="text" placeholder="Search.." name="search">
-  <button type="submit"><i class="fa fa-search"></i></button>
-</form>    
     </div>
-    
-    
-    <script>
-        // function to set a given theme/color-scheme
-        function setTheme(themeName) {
-            localStorage.setItem('theme', themeName);
-            document.documentElement.className = themeName;
-        }
-
-        // function to toggle between light and dark theme
-        function toggleTheme() {
-            if (localStorage.getItem('theme') === 'theme-dark') {
-                setTheme('theme-light');
-            } else {
-                setTheme('theme-dark');
-            }
-        }
-
-        // Immediately invoked function to set the theme on initial load
-        (function () {
-            if (localStorage.getItem('theme') === 'theme-dark') {
-                setTheme('theme-dark');
-            } else {
-                setTheme('theme-light');
-            }
-        })();
-    </script>
+    <div class="container2">
+        <p class="Parag1">What is the Football <br> Appointment App</p>
+        <p class="Soru">?</p>
+        <p class="Parag">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+        <br>   Minus dolorem similique eaque eius tempore cumque facere 
+           quibusdam iusto <br> necessitatibus, nemo repellendus delectus  facilis tempora molestiae odio accusantium quis qui a.</p>
+        
+    </div>
+    <div class="container3">
+        <p class="Parag2">How gonna work</p>
+        <img src="/static/Icon2.png" alt="" class="Icon1">
+        <p class="Icon1Parag">
+            Make an appointment</p>
+            <img src="/static/Icon1.jpg" alt="" class="Icon2">
+        <p class="Icon2Parag">
+            Play football</p>
+    </div>
 </body>
-
 </html>
