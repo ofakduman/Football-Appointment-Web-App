@@ -1,0 +1,48 @@
+{% block title %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_appointment.css')}}">
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class ="menu-bar">
+            <ul>
+                <li><a href="/homepage">HOMEPAGE</a></li>
+                <li><a href="/signin">SIGN IN</a></li>
+                <li><a href="/signup">SIGN UP</a></li>
+                <li><a href="/appointment">APPOINTMENT</a></li>
+                <li><a href="/aboutus">ABOUT US</a></li>
+                <li><a href="/contactus">CONTACT</a></li>
+            </ul>
+        </div>
+        <div class="content">
+           <div class="form-box">
+                <div class = "form-cities">
+                    <form id="user" class="input-group">
+                    <label for="City">City:</label>
+                    <select name="City" id="City" form="cityform" required>
+                    <option value="istanbul">Istanbul</option>
+                    <option value="bursa">Bursa</option>
+                    <option value="izmir">Izmir</option>
+                    <option value="adana">Adana</option>
+                    </select>
+                    </form>
+                </div>
+
+                <div class = "date">
+                    <label for="date">Date:</label>
+                    <input type="date" id="Date" name="Date" required>
+                </div>
+                
+                <div class = "skills">
+                    <button type="submit" class="submit-btn">Check</button>
+                </div>
+            </div>
+
+        </div>
+   
+        <div class="empty">
+
+        </div>
+
+    </div>    
+{% endblock %}
