@@ -115,14 +115,3 @@ body{
     background: #00ff40;
     border-radius: 3px;
 }
-.logo
-{
-    position: absolute;
-    width: 200px;
-    height: 150px;
-}
-.logo img
-{
-    width: 70%;
-    height: auto;
-}
