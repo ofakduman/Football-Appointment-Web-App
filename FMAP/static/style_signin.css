@@ -1,7 +1,14 @@
-
 body{
-    background: url(backg_10.jpg) no-repeat;
-    background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+.container{
+  position: absolute;
+  top: 14%;
+  height: 650px;
+  width: 1519px;
+  background: url(/static/images/backg_10.jpg) no-repeat;
+  background-size: cover;
 }
 .login-box{
     position: absolute;
