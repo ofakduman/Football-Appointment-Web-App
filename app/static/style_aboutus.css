@@ -15,7 +15,7 @@ body{
     background-color: #363946;
 }
 .about{
-    background: url(6.jpg) no-repeat left;
+    background: url(/static/images/6.jpg) no-repeat left;
     background-size: 65%;
     background-color: #303545;
     overflow: hidden;
