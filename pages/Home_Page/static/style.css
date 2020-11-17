@@ -1,3 +1,30 @@
+.menu-bar
+{
+    background: rgb(0, 75, 13);
+    text-align: center;
+}
+.menu-bar ul
+{
+    display: inline-flex;
+    list-style: none;
+    color: #fff;
+}
+.menu-bar ul li
+{
+    width: 120px;
+    margin: 15px;
+    padding: 15px;
+}
+.menu-bar ul li a
+{
+    text-decoration: none;
+    color: #fff;
+}
+.active, .menu-bar ul li:hover
+{
+    background: #00ff40;
+    border-radius: 3px;
+}
 body{
   margin: 0;
   padding: 0;
@@ -48,7 +75,7 @@ body{
   width: 350px;
 }
 .Parag{
-  top: 60%;
+  top: 80%;
   left: 10%;
   position: absolute;
   font-size: 20px;
