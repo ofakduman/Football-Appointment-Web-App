@@ -1,21 +1,26 @@
-body{
-    background: url(/static/images/back2.jpg) no-repeat;
-  background-size:cover;
-  margin: 0;
-  padding: 0;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
 }
-
+.hero
+{
+    height: max-content;
+    width: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)),url(/static/images/black10.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
 .form-box
 {
-    
     width: 380px;
-    height: 700px;
+    height: 580px;
     position: relative;
     margin: 6% auto;
     background: transparent;
     padding: 5px;
     overflow: hidden;
-    top: 40%;
 }
 .button-box
 {
@@ -47,6 +52,7 @@ body{
 }
 .input-group
 {
+    color: white;
     top: 110px;
     position: absolute;
     width: 280px;
@@ -54,14 +60,13 @@ body{
 }
 .input-field
 {
-    color: #2bff00;
     width: 100%;
     padding: 10px 0;
     margin: 5px 0;
     border-left: 0;
     border-top: 0;
     border-right: 0;
-    border-bottom: 3px solid rgb(0, 0, 0);
+    border-bottom: 3px solid rgb(255, 255, 255);
     outline: none;
     background: transparent;
 }
@@ -98,10 +103,8 @@ span
 }
 .menu-bar
 {
-  background : transparent;
-  transition: background-color 1s ease 0s;
-
-  text-align: center;
+    background: rgb(0, 75, 13);
+    text-align: center;
 }
 .menu-bar ul
 {

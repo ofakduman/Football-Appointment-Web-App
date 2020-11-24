@@ -1,8 +1,10 @@
 body{
+  
   margin: 0;
   padding: 0;
 }
 .container1{
+  background-image: url(/static/images/black9.jpg);
   height: 300px;
   width: 1519px;
   background-color: black;

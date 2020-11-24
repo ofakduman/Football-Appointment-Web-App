@@ -1,6 +1,4 @@
 body{
-  background: url(/static/images/back2.jpg) no-repeat;
-  background-size:cover;
   margin: 0;
   padding: 0;
 }
@@ -9,13 +7,13 @@ body{
   top: 14%;
   height: 650px;
   width: 1519px;
-  
+  background: url(/static/images/black8.jpg) no-repeat;
   background-size: cover;
 }
 .login-box{
     position: absolute;
     top: 20%;
-    left: 10%;
+    left: 70%;
 }
 .textbox{
     width: 100%;
@@ -52,10 +50,8 @@ body{
   }
   .menu-bar
 {
-  background : transparent;
-  transition: background-color 1s ease 0s;
-    
-  text-align: center;
+    background: rgb(0, 75, 13);
+    text-align: center;
 }
 .menu-bar ul
 {
