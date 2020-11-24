@@ -1,8 +1,9 @@
-*{
+body{
+    background: url(/static/images/back2.jpg) no-repeat;
+    background-size:cover;
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-}
+  }
 .hero
 {
     height: max-content;
@@ -103,7 +104,7 @@ span
 }
 .menu-bar
 {
-    background: rgb(0, 75, 13);
+    background: transparent;
     text-align: center;
 }
 .menu-bar ul
