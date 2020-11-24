@@ -1,26 +1,21 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+body{
+    background: url(/static/images/back2.jpg) no-repeat;
+  background-size:cover;
+  margin: 0;
+  padding: 0;
 }
-.hero
-{
-    height: max-content;
-    width: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)),url(/static/images/backg_2.jpg);
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-}
+
 .form-box
 {
+    
     width: 380px;
-    height: 580px;
+    height: 700px;
     position: relative;
     margin: 6% auto;
     background: transparent;
     padding: 5px;
     overflow: hidden;
+    top: 40%;
 }
 .button-box
 {
@@ -59,6 +54,7 @@
 }
 .input-field
 {
+    color: #2bff00;
     width: 100%;
     padding: 10px 0;
     margin: 5px 0;
@@ -102,8 +98,10 @@ span
 }
 .menu-bar
 {
-    background: rgb(0, 75, 13);
-    text-align: center;
+  background : transparent;
+  transition: background-color 1s ease 0s;
+
+  text-align: center;
 }
 .menu-bar ul
 {

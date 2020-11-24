@@ -16,6 +16,7 @@
             <li><a href="/appointment">APPOINTMENT</a></li>
             <li><a href="/aboutus">ABOUT US</a></li>
             <li><a href="/contactus">CONTACT</a></li>
+            <li><a href="/myprofil">MyProfil</a></li>
         </ul>
     </div>
     <div class="container">
@@ -71,7 +72,12 @@
                   <input type="submit" name="submit">
               </div>-->
               <div class="skills">
-                <button>Send</button>
+                <button onclick="myFunction()">Send</button>
+                    <script>
+                    function myFunction() {
+                      alert("Message send!").style.color = "red";
+                    }
+                    </script>
             </div>
               </div>
             </div>

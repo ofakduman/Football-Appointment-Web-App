@@ -15,6 +15,10 @@ def signup():
 def appointment():
     return render_template("appointment.html")
 
+@app.route("/myprofil")
+def myprofil():
+    return render_template("myprofil.html")
+    
 @app.route("/contactus")
 def contactus():
     return render_template("contactus.html")
