@@ -61,6 +61,7 @@ body{
 }
 .input-field
 {
+    color: greenyellow;
     width: 100%;
     padding: 10px 0;
     margin: 5px 0;
