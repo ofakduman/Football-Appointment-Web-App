@@ -1,5 +1,7 @@
 {% block title %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_appointment.css')}}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<title>Appointment</title>
 {% endblock %}
 {% block content %}
 
@@ -14,36 +16,30 @@
                 <li><a href="/contactus">CONTACT</a></li>
                 <li><a href="/myprofil">MyProfil</a></li>
             </ul>
-        </div>
-        <div class="content">
-           <div class="form-box">
-                <div class = "form-cities">
-                    <form id="user" class="input-group">
-                    <label for="City">City:</label>
-                    <select name="City" id="City" form="cityform" required>
-                    <option value="istanbul">Istanbul</option>
-                    <option value="bursa">Bursa</option>
-                    <option value="izmir">Izmir</option>
-                    <option value="adana">Adana</option>
-                    </select>
-                    </form>
-                </div>
+    </div>
+    <div style ="margin-Top:30px" class="container">
+        <h3 style="color:white;">Add Football Area</h3>
+        <form action="/add" method="POST">
+            <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">Football Area Name</label>
+                <input type="text"  name="name" class="form-control" id="formGroupExampleInput" placeholder="Enter Name">
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput2">Football Area Adress</label>
+                <textarea type="text"  name="adress" class="form-control" id="formGroupExampleInput2" placeholder="Enter Adress "></textarea>
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">City</label>
+                <input type="text"  name="city" class="form-control" id="formGroupExampleInput" placeholder="Enter City">
+              </div>
+              
+              <button type="submit" class ="btn btn-success">Add</button>
+        </form><br>
 
-                <div class = "date">
-                    <label for="date">Date:</label>
-                    <input type="date" id="Date" name="Date" required>
-                </div>
-                
-                <div class = "skills">
-                    <button type="submit" class="submit-btn">Check</button>
-                </div>
-            </div>
 
-        </div>
-   
-        <div class="empty">
-
-        </div>
-
-    </div>    
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
+
+    
