@@ -17,7 +17,8 @@ def signup():
 
 @app.route("/appointment")
 def appointment():
-    return render_template("appointment.html")
+    areas = FootballArea.query.all()
+    return render_template("appointment.html",areas=areas)
 
 @app.route("/myprofil")
 def myprofil():
@@ -42,7 +43,8 @@ def addArea():
     AreaName = request.form.get("area_name")
     City = request.form.get("city")
     adress = request.form.get("adress")
-    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,
+    OwnerNumber = request.form.get("owner_number")
+    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,
                             City = City,adress=adress)
 
     db.session.add(newArea)
@@ -64,6 +66,7 @@ class Users(db.Model):
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     OwnerName = db.Column(db.String(80))
+    OwnerNumber = db.Column(db.String(80))
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
