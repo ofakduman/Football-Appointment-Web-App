@@ -24,6 +24,10 @@
             <label style="color: white;" for="formGroupExampleInput">Owner Name</label>
             <input type="text"  name="owner_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Owner Name">
           </div>
+          <div class="form-group">
+            <label style="color: white;" for="formGroupExampleInput">Phone Number</label>
+            <input type="text"  name="owner_number" class="form-control" id="formGroupExampleInput" placeholder="Enter Phone Number">
+          </div>
             <div class="form-group">
                 <label style="color: white;" for="formGroupExampleInput">Football Area Name</label>
                 <input type="text"  name="area_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Area Name">
@@ -36,10 +40,34 @@
                 <label style="color: white;" for="formGroupExampleInput2">Football Area Adress</label>
                 <textarea type="text"  name="adress" class="form-control" id="formGroupExampleInput2" placeholder="Enter Adress "></textarea>
               </div>
-              
-              
               <button type="submit" class ="btn btn-success">Add</button>
         </form><br>
+        
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Owner Name</th>
+              <th scope="col">Owner Phone Number</th>
+              <th scope="col">Football Area Name</th>
+              <th scope="col">City</th>
+              <th scope="col">Adress</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for area in areas  %}
+                <tr>
+                <th scope="row">{{area.id}}</th>
+                <td>{{area.OwnerName}}</td>
+                <td>{{area.OwnerNumber}}</td>
+                <td>{{area.AreaName}}</td>
+                <td>{{area.City}}</td>
+                <td>{{area.adress}}</td>
+                </tr>
+                {% endfor %}
+          </tbody>
+        </table>
 
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
