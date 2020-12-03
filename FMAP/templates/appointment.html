@@ -16,54 +16,32 @@
                 <li><a href="/contactus">CONTACT</a></li>
                 <li><a href="/myprofil">MyProfil</a></li>
             </ul>
-    </div>
-    <div style ="margin-Top:30px" class="container">
-        <h3 style="color:white;">Add Football Area</h3>
-        <form action="/addArea" method="POST">
-          <div class="form-group">
-            <label style="color: white;" for="formGroupExampleInput">Owner Name</label>
-            <input type="text"  name="owner_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Owner Name">
-          </div>
-          <div class="form-group">
-            <label style="color: white;" for="formGroupExampleInput">Phone Number</label>
-            <input type="text"  name="owner_number" class="form-control" id="formGroupExampleInput" placeholder="Enter Phone Number">
-          </div>
-            <div class="form-group">
-                <label style="color: white;" for="formGroupExampleInput">Football Area Name</label>
-                <input type="text"  name="area_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Area Name">
-              </div>
-              <div class="form-group">
-                <label style="color: white;" for="formGroupExampleInput">City</label>
-                <input type="text"  name="city" class="form-control" id="formGroupExampleInput" placeholder="Enter City">
-              </div>
-              <div class="form-group">
-                <label style="color: white;" for="formGroupExampleInput2">Football Area Adress</label>
-                <textarea type="text"  name="adress" class="form-control" id="formGroupExampleInput2" placeholder="Enter Adress "></textarea>
-              </div>
-              <button type="submit" class ="btn btn-success">Add</button>
-        </form><br>
-        
-        
-        <table class="table">
+      
+        <table class="table table-hover table-dark">
           <thead>
             <tr>
               <th scope="col">id</th>
+              <th scope="col">Photograph</th>   
               <th scope="col">Owner Name</th>
               <th scope="col">Owner Phone Number</th>
               <th scope="col">Football Area Name</th>
               <th scope="col">City</th>
               <th scope="col">Adress</th>
+              <th scope="col">Appointment</th>
+              
             </tr>
           </thead>
           <tbody>
             {% for area in areas  %}
                 <tr>
                 <th scope="row">{{area.id}}</th>
+                <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
                 <td>{{area.OwnerName}}</td>
                 <td>{{area.OwnerNumber}}</td>
                 <td>{{area.AreaName}}</td>
                 <td>{{area.City}}</td>
                 <td>{{area.adress}}</td>
+                <td><a href="/bookAppointment/{{area.id}}" class="btn btn-success">Book Appointment</a></td>
                 </tr>
                 {% endfor %}
           </tbody>
