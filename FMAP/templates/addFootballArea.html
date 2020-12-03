@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Football Area</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/static/book_Appointment.css">
+</head>
+<body>
+
+    <div class ="menu-bar">
+        <ul>
+            <li><a href="/homepage">HOMEPAGE</a></li>
+            <li><a href="/signin">SIGN IN</a></li>
+            <li><a href="/signup">SIGN UP</a></li>
+            <li><a href="/appointment">APPOINTMENT</a></li>
+            <li><a href="/aboutus">ABOUT US</a></li>
+            <li><a href="/contactus">CONTACT</a></li>
+            <li><a href="/myprofil">MyProfil</a></li>
+        </ul>
+    
+    </div>
+    <div style ="margin-Top:30px" class="container">
+        <h3 style="color:white;">Add Football Area</h3>
+        <form action="/addArea" method="POST">
+          <div class="form-group">
+            <label style="color: white;" for="formGroupExampleInput">Owner Name</label>
+            <input type="text"  name="owner_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Owner Name">
+          </div>
+          <div class="form-group">
+            <label style="color: white;" for="formGroupExampleInput">Phone Number</label>
+            <input type="text"  name="owner_number" class="form-control" id="formGroupExampleInput" placeholder="Enter Phone Number">
+          </div>
+            <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">Football Area Name</label>
+                <input type="text"  name="area_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Area Name">
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">City</label>
+                <input type="text"  name="city" class="form-control" id="formGroupExampleInput" placeholder="Enter City">
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput2">Football Area Adress</label>
+                <textarea type="text"  name="adress" class="form-control" id="formGroupExampleInput2" placeholder="Enter Adress "></textarea>
+              </div>
+              <button type="submit" class ="btn btn-success">Add</button>
+        </form><br>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

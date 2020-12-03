@@ -36,6 +36,10 @@ def aboutus():
 def signin():
     return render_template("signin.html")
 
+@app.route("/addFootballArea")
+def addFootballArea():
+    return render_template("addFootballArea.html")
+
 
 @app.route("/addArea",methods = ["POST"])
 def addArea():
@@ -49,9 +53,14 @@ def addArea():
 
     db.session.add(newArea)
     db.session.commit()
-    return redirect(url_for("appointment"))
+    return redirect(url_for("addFootballArea"))
 
+@app.route("/bookAppointment/<string:id>")
+def bookAppointment(id):
+    area = FootballArea.query.filter_by(id = id).first()
 
+    return render_template("book_Appointment.html",area=area)
+    
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))

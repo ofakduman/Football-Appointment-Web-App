@@ -1,0 +1,33 @@
+body{
+    background: url(/static/images/back2.jpg) no-repeat;
+    background-size:cover;
+    margin: 0;
+    padding: 0;
+  }
+  .menu-bar
+{
+    background: transparent;
+    text-align: center;
+}
+.menu-bar ul
+{
+    display: inline-flex;
+    list-style: none;
+    color: #fff;
+}
+.menu-bar ul li
+{
+    width: 120px;
+    margin: 15px;
+    padding: 15px;
+}
+.menu-bar ul li a
+{
+    text-decoration: none;
+    color: #fff;
+}
+.active, .menu-bar ul li:hover
+{
+    background: #00ff40;
+    border-radius: 3px;
+}
