@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -79,6 +79,6 @@ class FootballArea(db.Model):
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
