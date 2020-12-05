@@ -21,34 +21,31 @@
     
     
     <div style=" color: white; margin-top: 100px;" class="container">
-        <h3>Todo List</h3>
-        <hr>
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">id</th>
-                <th scope="col">Saatler</th>
-                <th scope="col">Durum</th>
+                <th scope="col"> Details</th>
+                <th scope="col"> Hours</th>
+                <th scope="col"> Make Appointment</th>
+                        
               </tr>
             </thead>
             <tbody>
-              
+              <td><h2>{{area.AreaName}}</h2>
+              <h2>Owner:{{area.OwnerName}} </h2>
+              <h2>Owner Number:{{area.OwnerNumber}}</h2>
+              <h2>City:{{area.City}}</h2>
+              </td> 
             </tbody>
-          </table>
-          <h2 style="color: red;">Adres</h3>
-          <hr>
-          <h3>Kocaeli/Gebze ....</h2>
-          <hr>
-          <h2 style="color: red;">Telefon</h3>
-          <hr>
-          <h3>0554 xxx xx xx</h2>
-                  
+        </table>
     </div>
 
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+      
 </body>
 </html>
