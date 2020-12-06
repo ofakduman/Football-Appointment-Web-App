@@ -79,6 +79,6 @@ class FootballArea(db.Model):
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
-
+    clocks = db.Column(db.ARRAY(db.Boolean),server_default="{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}")
 if __name__ == "__main__":
     app.run(debug=True)
