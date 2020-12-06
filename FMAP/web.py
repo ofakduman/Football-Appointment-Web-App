@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -74,6 +74,19 @@ def signup_user():
     db.session.commit()
     return redirect(url_for("signin"))
 
+@app.route("/signup_owner",methods = ["POST"])
+def signup_owner():
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    username = request.form.get("user_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    newOwner = Users(name = name,surname = surname,username=username,email = email,password = password)
+
+    db.session.add(newOwner)
+    db.session.commit()
+    return redirect(url_for("signin"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -81,10 +94,7 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
-    #appointment_AreaName = db.Column(db.String(80))
-    #appointment_City = db.Column(db.String(80))
-    #appointment_adress = db.Column(db.String(80))
-    
+
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     OwnerName = db.Column(db.String(80))
