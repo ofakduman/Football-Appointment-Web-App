@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>Profil</title>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="/static/style_myprofil.css">
-    <script src='main.js'></script>
+    
 </head>
 <body>
     <!-- Add icon library -->
@@ -22,20 +23,141 @@
             <li><a href="/contactus">CONTACT</a></li>
             <li><a href="/myprofil">MyProfil</a></li>
         </ul>
-    </div>
-    <div class="card">
-    <img src="/static/images/p.jpg" alt="John" style="width:100%">
-    <h1 class="Nametitle">John Doe</h1>
-    <p class="title">5*********</p>
-    <p class="title">Cumhuriyet, 2254. Sk. <br>
-        No:2, 41400  Gebze/Kocaeli<br>
-       GTU</p>
-       <p class="title">Rating = 7.8</p>   
-    <a href="#"><i class="fa fa-dribbble"></i></a>
-    <a href="#"><i class="fa fa-twitter"></i></a>
-    <a href="#"><i class="fa fa-linkedin"></i></a>
-    <a href="#"><i class="fa fa-facebook"></i></a>
-    <p><button><a href="/addFootballArea">Add Football Area</a></button></p>
-    </div>
+        <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="/static/images/profil_photo.png" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        Muhammed Gelgeçoğlu
+                                    </h5>
+                                    <h6>
+                                        Owner
+                                    </h6>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="" role="tab" aria-controls="profile" aria-selected="false">Appointments</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>asd_123</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Mehmet</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>asd@gmail.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>0533 XXX XX XX</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Adress</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>İstanbul/Pendik</p>
+                                            </div>
+                                           
+                                            <div class="col-md-6">
+                                                <a class="btn btn-primary" href="/addFootballArea">Add Football Area</a>
+                                            </div>
+                                            
+                                        </div>
+                            
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Experience</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Hourly Rate</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>10$/hr</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Total Projects</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>230</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>English Level</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Expert</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Availability</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>6 months</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>           
+        </div>
+
 </body>
 </html>
