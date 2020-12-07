@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -68,7 +68,7 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)#, user_type = "user")
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
 
     db.session.add(newUser)
     db.session.commit()
@@ -81,7 +81,7 @@ def signup_owner():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)#,user_type = "owner")
+    newOwner = Users(name = name,surname = surname,username=username,email = email,password = password,user_type = 1)
 
     db.session.add(newOwner)
     db.session.commit()
@@ -107,15 +107,7 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
-    #user_type = db.Column(db.String(80))
-
-    def __init__(self, name, surname, username, email, password):#, user_type):
-        self.name = name
-        self.surname = surname
-        self.username = username
-        self.email = email
-        self.password = password
-        #self.user_type = user_type
+    user_type = db.Column(db.Integer)
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -124,7 +116,25 @@ class FootballArea(db.Model):
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
-    
+    clocks = db.relationship('Clocks',backref = 'owner_area')
+class Clocks(db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'))
+    c10 = db.Column(db.Integer)
+    c11 = db.Column(db.Integer)
+    c12 = db.Column(db.Integer)
+    c13 = db.Column(db.Integer)
+    c14 = db.Column(db.Integer)
+    c15 = db.Column(db.Integer)
+    c16 = db.Column(db.Integer)
+    c17 = db.Column(db.Integer)
+    c18 = db.Column(db.Integer)
+    c19 = db.Column(db.Integer)
+    c20 = db.Column(db.Integer)
+    c21 = db.Column(db.Integer)
+    c22 = db.Column(db.Integer)
+    c23 = db.Column(db.Integer)
+    c24 = db.Column(db.Integer)
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
