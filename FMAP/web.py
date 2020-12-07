@@ -1,8 +1,8 @@
 from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.types import PickleType
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -48,12 +48,10 @@ def addArea():
     City = request.form.get("city")
     adress = request.form.get("adress")
     OwnerNumber = request.form.get("owner_number")
-    clocks = ["abc","def"]
     newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,
                             City = City,adress=adress)
-    newArea_clock = Clocks(OwnerName = OwnerName,c10=False,c11=False,c12=False,c13=False,c14=False,c15=False,c16=False,c17=False,c18=False,c19=False,c20=False,c21=False,c22=False,c23=False,c24=False,)
+
     db.session.add(newArea)
-    db.session.add(newArea_clock)
     db.session.commit()
     return redirect(url_for("addFootballArea"))
 
@@ -76,6 +74,19 @@ def signup_user():
     db.session.commit()
     return redirect(url_for("signin"))
 
+@app.route("/signup_owner",methods = ["POST"])
+def signup_owner():
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    username = request.form.get("user_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    newOwner = Users(name = name,surname = surname,username=username,email = email,password = password)
+
+    db.session.add(newOwner)
+    db.session.commit()
+    return redirect(url_for("signin"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -83,27 +94,6 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
-    #appointment_AreaName = db.Column(db.String(80))
-    #appointment_City = db.Column(db.String(80))
-    #appointment_adress = db.Column(db.String(80))
-class Clocks(db.Model):
-    id = db.Column(db.Integer,primary_key = True)
-    OwnerName = db.Column(db.String(80))
-    c10 = db.Column(db.Boolean)
-    c11 = db.Column(db.Boolean)
-    c12 = db.Column(db.Boolean)
-    c13 = db.Column(db.Boolean)
-    c14 = db.Column(db.Boolean)
-    c15 = db.Column(db.Boolean)
-    c16 = db.Column(db.Boolean)
-    c17 = db.Column(db.Boolean)
-    c18 = db.Column(db.Boolean)
-    c19 = db.Column(db.Boolean)
-    c20 = db.Column(db.Boolean)
-    c21 = db.Column(db.Boolean)
-    c22 = db.Column(db.Boolean)
-    c23 = db.Column(db.Boolean)
-    c24 = db.Column(db.Boolean)
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -112,19 +102,6 @@ class FootballArea(db.Model):
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 if __name__ == "__main__":
     app.run(debug=True)
