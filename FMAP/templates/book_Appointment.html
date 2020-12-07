@@ -18,37 +18,63 @@
             <li><a href="/myprofil">MyProfil</a></li>
         </ul>
     </div>
-    
-    
-    <div style=" color: white; margin-top: 100px;" class="container">
-        <h3>Todo List</h3>
-        <hr>
-        <table class="table">
+    <img src="/static/images/halısaha1.jpg" alt="" height="200" width="350"/> 
+    <img src="/static/images/halısaha2.jpg" alt="" height="200" width="350"/>
+    <img src="/static/images/halısaha4.jpg" alt="" height="200" width="350"/>
+    <img src="/static/images/halısaha5.jpg" alt="" height="200" width="350"/>
+    <div style=" color: white; margin-top: 70px;" class="container">
+        <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">id</th>
-                <th scope="col">Saatler</th>
-                <th scope="col">Durum</th>
+                <th scope="col"> Details</th>
+                <th scope="col"> Hours</th>
+                <th scope="col"> Make Appointment</th>
+                        
               </tr>
             </thead>
             <tbody>
               
+              <td><h4 style="color: rgb(0, 255, 0);">Name</h4>
+              <h4>{{area.AreaName}}</h4>
+              <hr color="green">
+              <h4 style="color:rgb(0, 255, 0);">Owner</h4>
+              <h4>{{area.OwnerName}} </h4>
+              <hr color="green">
+              <h4 style="color: rgb(0, 255, 0);">Owner Number</h4>
+              <h4>{{area.OwnerNumber}}</h4>
+              <hr color="green">
+              <h4 style="color:rgb(0, 255, 0);">City</h4>
+              <h4>{{area.City}}</h4>
+              <hr color="green">
+              <h4 style="color: rgb(0, 255, 0);">Adress</h4>
+              <h4>{{area.adress}}</h4>
+              </td>
+              <td>
+                <a class="btn btn-primary">09.00-10.00</a>
+                <br>
+                <br>
+                <a class="btn btn-primary">10.00-11.00</a>
+                <br>
+                <br>
+                <a class="btn btn-primary">11.00-12.00</a>
+                <br>
+                <br>
+                <a class="btn btn-primary">12.00-13.00</a>
+                <br>
+                <br>
+                <a class="btn btn-primary">13.00-14.00</a>
+              </td>
+              <td><a class="btn btn-success">EMPTY</a></td>
             </tbody>
-          </table>
-          <h2 style="color: red;">Adres</h3>
-          <hr>
-          <h3>Kocaeli/Gebze ....</h2>
-          <hr>
-          <h2 style="color: red;">Telefon</h3>
-          <hr>
-          <h3>0554 xxx xx xx</h2>
-                  
+        </table>
     </div>
 
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+      
 </body>
 </html>

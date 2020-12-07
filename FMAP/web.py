@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users\90538\Desktop\Project\FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -61,6 +61,19 @@ def bookAppointment(id):
 
     return render_template("book_Appointment.html",area=area)
     
+@app.route("/signup_user",methods = ["POST"])
+def signup_user():
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    username = request.form.get("user_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)
+
+    db.session.add(newUser)
+    db.session.commit()
+    return redirect(url_for("signin"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -68,9 +81,9 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
-    appointment_AreaName = db.Column(db.String(80))
-    appointment_City = db.Column(db.String(80))
-    appointment_adress = db.Column(db.String(80))
+    #appointment_AreaName = db.Column(db.String(80))
+    #appointment_City = db.Column(db.String(80))
+    #appointment_adress = db.Column(db.String(80))
     
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -79,6 +92,6 @@ class FootballArea(db.Model):
     AreaName = db.Column(db.String(80))
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
-    clocks = db.Column(db.ARRAY(db.Boolean),server_default="{f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f}")
+    
 if __name__ == "__main__":
     app.run(debug=True)
