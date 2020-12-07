@@ -68,7 +68,7 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)#, user_type = "user")
 
     db.session.add(newUser)
     db.session.commit()
@@ -81,11 +81,24 @@ def signup_owner():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newOwner = Users(name = name,surname = surname,username=username,email = email,password = password)
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password)#,user_type = "owner")
 
     db.session.add(newOwner)
     db.session.commit()
     return redirect(url_for("signin"))
+
+@app.route("/signin_user", methods=["POST", "GET"])
+def signin_user():
+    if request.method == "POST":
+        username = request.form["nm"]
+        password = request.form["psw"]
+        user_check = Users.query.filter_by(username=username).first()
+        if user_check:
+            if user_check.password == password:
+                return render_template("myprofil.html")
+        return '<h1>Invalid username or password</h1>'
+    else:
+        return render_template("signin.html")
 
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -94,6 +107,15 @@ class Users(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(80))
     password = db.Column(db.String(80))
+    #user_type = db.Column(db.String(80))
+
+    def __init__(self, name, surname, username, email, password):#, user_type):
+        self.name = name
+        self.surname = surname
+        self.username = username
+        self.email = email
+        self.password = password
+        #self.user_type = user_type
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -104,4 +126,5 @@ class FootballArea(db.Model):
     adress = db.Column(db.Text)
     
 if __name__ == "__main__":
+    db.create_all()
     app.run(debug=True)

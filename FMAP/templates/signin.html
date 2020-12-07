@@ -37,24 +37,23 @@
     </div>
 <div class="login-box">
   <h1 style="color:greenyellow;">Login</h1>
+   
   <div class="textbox">
     <i class="fas fa-user"></i>
-    <input type="text" placeholder="Username">
-  </div>
-  <br>
-  <div class="textbox">
-    <i class="fas fa-lock"></i>
-    
- <input type="password" value="FakePSW" id="myInput" placeholder="Password">
+                                          <form action="/signin_user" method="post">
+                                            <input type="text" name="nm" placeholder="Username">
+                                            </div>
+                                            <br>
+                                              <div class="textbox">
+                                                <i class="fas fa-lock"></i>
+                                                <input type="password" name="psw" value="FakePSW" id="myInput" placeholder="Password">
+                                              </div>
+                                            <br>
+                                              <input type="checkbox" onclick="myFunction()" > 
+                                            <br>
 
-  </div>
-  <br>
-  <input type="checkbox" onclick="myFunction()" > 
-
-  <br>
-  <form action="/myprofil">
-    <input type="submit" value="Sign in" class="btn" />
-</form>
+                                          <input type="submit" value="Sign in" class="btn" />
+                                          </form>
   
 </div>
   </body>
