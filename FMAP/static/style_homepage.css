@@ -130,6 +130,14 @@ body{
     margin: 15px;
     padding: 15px;
 }
+.dropdown{
+  width: 120px;
+  margin: 15px;
+  padding: 10px;
+}
+.btn btn-secondary dropdown-toggle{
+  background-color: black;
+}
 .menu-bar ul li a
 {
     text-decoration: none;
@@ -139,4 +147,8 @@ body{
 {
     background: #00ff40;
     border-radius: 3px;
+}
+ul#more-nav, ul#nav-bar-filter {
+  display: inline-block;
+  vertical-align: top;
 }
