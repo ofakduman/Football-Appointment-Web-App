@@ -58,6 +58,8 @@ def addArea():
     db.session.commit()
     return redirect(url_for("addFootballArea"))
 
+
+
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
@@ -76,6 +78,19 @@ def signup_user():
     db.session.add(newUser)
     db.session.commit()
     return redirect(url_for("signin"))
+
+@app.route("/editMyProfil",methods = ["POST"])
+def edit_profile():
+    name = request.form.get("name")
+    surname = request.form.get("surname")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    newUser = Users(name = name,surname = surname,username=username,email = "berkdursun@football.com",password = password, user_type = 0)
+
+    db.session.add(newUser)
+    db.session.commit()
+    return redirect(url_for("myprofil"))
+
 
 @app.route("/signup_owner",methods = ["POST"])
 def signup_owner():
