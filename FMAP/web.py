@@ -81,14 +81,15 @@ def signup_user():
 
 @app.route("/editMyProfil",methods = ["POST"])
 def edit_profile():
-    name = request.form.get("name")
-    surname = request.form.get("surname")
-    username = request.form.get("username")
-    password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = "berkdursun@football.com",password = password, user_type = 0)
-
-    db.session.add(newUser)
+    
+    user = Users.query.get(1)
+    user.name = 'New Name'
     db.session.commit()
+    
+    
+    
+    
+    
     return redirect(url_for("myprofil"))
 
 
