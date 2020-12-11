@@ -111,44 +111,287 @@ body{
   color: white;
   
 }
-.menu-bar
-{
-  background : transparent;
-  transition: background-color 1s ease 0s;
-    
+body{
+  background-image: url(/static/images/black9.jpg);
+  margin: 0;
+  padding: 0;
+}
+.container1{
+  height: 300px;
+  width: 1659px;
+  background-color: black;
+  margin-left: 0px;
+  
+}
+.container2{
+  height: 300px;
+  width: 1659px;
+  background-color: green;
+  margin-left: 0px;
+  
+}
+.container3{
+  height: 300px;
+  width: 1659px;
+  background-color: black;
+  margin-left: 0px;
+  
+}
+.Image1{
+  position: absolute;
+  border: solid;
+  top: 20%;
+  left: 5%;
+  height: 200px;
+  width: 350px;
+}
+.Image2{
+  position: absolute;
+  border: solid;
+  top: 20%;
+  left: 37%;
+  height: 200px;
+  width: 350px;
+}
+.Image3{
+  position: absolute;
+  border: solid;
+  top: 20%;
+  left: 70%;
+  height: 200px;
+  width: 350px;
+}
+.Parag{
+  top: 75%;
+  left: 10%;
+  position: absolute;
+  font-size: 20px;
+}
+.Parag1{
+  top: 57%;
+  left: 10%;
+  position: absolute;
+  font-size: 30px;
+}
+.Soru{
+  top: 45%;
+  left: 30%;
+  position: absolute;
+  font-size: 100px;
+}
+.Parag2{
+  top: 85%;
+  left: 35%;
+  position: absolute;
+  font-size: 70px;
+  color: white;
+}
+.Icon1{
+  position: absolute;
+  border: solid;
+  border-color: greenyellow;
+  border-width: 10px;
+  top: 107%;
+  left: 35%;
+  height: 100px;
+  width: 150px;
+  background-color: white;
+}
+.Icon1Parag{
+  position: absolute;
+  top: 124%;
+  left: 35%;
+  font-size: 20px;
+  color: white;
+  
+}
+.Icon2{
+  position: absolute;
+  border: solid;
+  border-color: greenyellow;
+  border-width: 10px;
+  top: 107%;
+  left: 55%;
+  height: 100px;
+  width: 150px;
+  background-color: white;
+}
+.Icon2Parag{
+  position: absolute;
+  top: 124%;
+  left: 55%;
+  font-size: 20px;
+  color: white;
+  
+}
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+nav{
+  background: #1b1b1b;
+  width: 1659px;
+}
+nav:after{
+  content: '';
+  clear: both;
+  display: table;
+}
+nav .logo{
+  float: left;
+  color: white;
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 70px;
+  padding-left: 60px;
+}
+nav ul{
+  float: right;
+  margin-right: 40px;
+  list-style: none;
+  position: relative;
+}
+nav ul li{
+  float: left;
+  display: inline-block;
+  background: #1b1b1b;
+  margin: 0 5px;
+}
+nav ul li a{
+  color: white;
+  line-height: 70px;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 8px 15px;
+}
+nav ul li a:hover{
+  color: cyan;
+  border-radius: 5px;
+  box-shadow:  0 0 5px #33ffff,
+               0 0 10px #66ffff;
+}
+nav ul ul li a:hover{
+  box-shadow: none;
+}
+nav ul ul{
+  position: absolute;
+  top: 90px;
+  border-top: 3px solid cyan;
+  opacity: 0;
+  visibility: hidden;
+  transition: top .3s;
+}
+nav ul ul ul{
+  border-top: none;
+}
+nav ul li:hover > ul{
+  top: 70px;
+  opacity: 1;
+  visibility: visible;
+}
+nav ul ul li{
+  position: relative;
+  margin: 0px;
+  width: 150px;
+  float: none;
+  display: list-item;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+nav ul ul li a{
+  line-height: 50px;
+}
+nav ul ul ul li{
+  position: relative;
+  top: -60px;
+  left: 150px;
+}
+.show,.icon,input{
+  display: none;
+}
+.fa-plus{
+  font-size: 15px;
+  margin-left: 40px;
+}
+@media all and (max-width: 968px) {
+  nav ul{
+    margin-right: 0px;
+    float: left;
+  }
+  nav .logo{
+    padding-left: 30px;
+    width: 100%;
+  }
+  .show + a, ul{
+    display: none;
+  }
+  nav ul li,nav ul ul li{
+    display: block;
+    width: 100%;
+  }
+  nav ul li a:hover{
+    box-shadow: none;
+  }
+  .show{
+    display: block;
+    color: white;
+    font-size: 18px;
+    padding: 0 20px;
+    line-height: 70px;
+    cursor: pointer;
+  }
+  .show:hover{
+    color: cyan;
+  }
+  .icon{
+    display: block;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    line-height: 70px;
+    cursor: pointer;
+    font-size: 25px;
+  }
+  nav ul ul{
+    top: 70px;
+    border-top: 0px;
+    float: none;
+    position: static;
+    display: none;
+    opacity: 1;
+    visibility: visible;
+  }
+  nav ul ul a{
+    padding-left: 40px;
+  }
+  nav ul ul ul a{
+    padding-left: 80px;
+  }
+  nav ul ul ul li{
+    position: static;
+  }
+  [id^=btn]:checked + ul{
+    display: block;
+  }
+  nav ul ul li{
+    border-bottom: 0px;
+  }
+  span.cancel:before{
+    content: '\f00d';
+  }
+}
+.content{
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   text-align: center;
 }
-.menu-bar ul
-{
-    display: inline-flex;
-    list-style: none;
-    color: #fff;
+header{
+  font-size: 35px;
+  font-weight: 600;
+  padding: 10px 0;
 }
-.menu-bar ul li
-{
-    width: 120px;
-    margin: 15px;
-    padding: 15px;
-}
-.dropdown{
-  width: 120px;
-  margin: 15px;
-  padding: 10px;
-}
-.btn btn-secondary dropdown-toggle{
-  background-color: black;
-}
-.menu-bar ul li a
-{
-    text-decoration: none;
-    color: #fff;
-}
-.active, .menu-bar ul li:hover
-{
-    background: #00ff40;
-    border-radius: 3px;
-}
-ul#more-nav, ul#nav-bar-filter {
-  display: inline-block;
-  vertical-align: top;
+p{
+  font-size: 30px;
+  font-weight: 500;
 }
