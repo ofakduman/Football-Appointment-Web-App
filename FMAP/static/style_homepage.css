@@ -49,19 +49,19 @@ body{
   width: 350px;
 }
 .Parag{
-  top: 75%;
+  top: 65%;
   left: 10%;
   position: absolute;
   font-size: 20px;
 }
 .Parag1{
-  top: 57%;
+  top: 60%;
   left: 10%;
   position: absolute;
   font-size: 30px;
 }
 .Soru{
-  top: 45%;
+  top: 50%;
   left: 30%;
   position: absolute;
   font-size: 100px;
@@ -180,7 +180,7 @@ body{
   font-size: 100px;
 }
 .Parag2{
-  top: 85%;
+  top: 92%;
   left: 35%;
   position: absolute;
   font-size: 70px;

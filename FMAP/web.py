@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -50,12 +50,14 @@ def addArea():
     AreaName = request.form.get("area_name")
     City = request.form.get("city")
     adress = request.form.get("adress")
-    OwnerNumber = request.form.get("owner_number")
+    OwnerNumber = request.form.get("owner_number")    
     newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,
                             City = City,adress=adress)
-
+    newClock = Clocks(c10 = 0,owner_area = newArea, c11 = 0,c12 = 0,c13 = 0,c14 = 0,c15 = 0,c16 = 0,c17 = 0,c18 = 0,c19 = 0,c20 = 0,c21 = 0, c22 = 0,c23 = 0,c24 = 0)
     db.session.add(newArea)
+    db.session.add(newClock)
     db.session.commit()
+
     return redirect(url_for("addFootballArea"))
 
 
