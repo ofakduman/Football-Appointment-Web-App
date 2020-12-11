@@ -228,7 +228,7 @@ body{
 
 nav{
   background: #1b1b1b;
-  width: 1659px;
+  width:auto;
 }
 nav:after{
   content: '';
