@@ -1,9 +1,8 @@
-from flask import Flask,render_template,request,redirect,url_for,session,flash
+from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) 
-app.secret_key = "FMAP"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -23,12 +22,7 @@ def appointment():
 
 @app.route("/myprofil")
 def myprofil():
-    if "username" in session:
-        username = session["username"]
-        return f"<h1> {username} </h1>"
-        #return render_template("myprofil.html")
-    else:
-        return redirect(url_for("signin"))
+    return render_template("myprofil.html")
     
 @app.route("/contactus")
 def contactus():
@@ -73,16 +67,7 @@ def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
 
     return render_template("book_Appointment.html",area=area)
-
-@app.route("/editMyProfil",methods = ["POST"])
-def edit_profile():
     
-    user = Users.query.get(1)
-    user.name = 'New Name'
-    db.session.commit()
-    
-    return redirect(url_for("myprofil"))
-
 @app.route("/signup_user",methods = ["POST"])
 def signup_user():
     name = request.form.get("name")
@@ -92,10 +77,23 @@ def signup_user():
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
 
-    flash("You registered as a user","info")
     db.session.add(newUser)
     db.session.commit()
     return redirect(url_for("signin"))
+
+@app.route("/editMyProfil",methods = ["POST"])
+def edit_profile():
+    
+    user = Users.query.get(1)
+    user.name = 'New Name'
+    db.session.commit()
+    
+    
+    
+    
+    
+    return redirect(url_for("myprofil"))
+
 
 @app.route("/signup_owner",methods = ["POST"])
 def signup_owner():
@@ -106,7 +104,6 @@ def signup_owner():
     password = request.form.get("password")
     newOwner = Users(name = name,surname = surname,username=username,email = email,password = password,user_type = 1)
 
-    flash("You registered as a owner","info")
     db.session.add(newOwner)
     db.session.commit()
     return redirect(url_for("signin"))
@@ -116,17 +113,13 @@ def signin_user():
     if request.method == "POST":
         username = request.form["nm"]
         password = request.form["psw"]
-        session["username"] = username
         user_check = Users.query.filter_by(username=username).first()
         if user_check:
             if user_check.password == password:
-                if "username" in session:
-                    return redirect(url_for("myprofil"))
-            else:
-                flash("Invalid username or password!","info")
-        else:
-            flash("User not found","info")
-            return render_template("signin.html")
+                return render_template("myprofil.html")
+        return '<h1>Invalid username or password.</h1>'
+    else:
+        return render_template("signin.html")
 
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -145,7 +138,6 @@ class FootballArea(db.Model):
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
     clocks = db.relationship('Clocks',backref = 'owner_area')
-
 class Clocks(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'))
@@ -164,7 +156,6 @@ class Clocks(db.Model):
     c22 = db.Column(db.Integer)
     c23 = db.Column(db.Integer)
     c24 = db.Column(db.Integer)
-
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
