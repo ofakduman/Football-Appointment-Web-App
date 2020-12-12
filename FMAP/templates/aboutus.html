@@ -26,16 +26,21 @@
   <li><a href="/aboutus">ABOUT US</a></li>
   <li><a href="/contactus">CONTACT US</a></li>
   <li><a href="/myprofil">MYPROFIL</a></li>
-  
-  <li>
-    <label for="btn-1" class="show">Features +</label>
-    <a href="#">Sign In</a>
-    <input class="input1" type="checkbox" id="btn-1">
-    <ul>
+    {% if  id != 0 %}
+      <li><a href="/signout">Sign Out</a></li>
+    {% endif %}
+      {% if  id == 0 %}
+               <li>
+      <label for="btn-1" class="show">Features +</label>
+      <a href="#">Sıgn In</a>
+      <input class="input1" type="checkbox" id="btn-1">
+      <ul>
         <li><a href="/signin">Sıgn In</a></li>
         <li><a href="/signup">Sıgn Up</a></li>
-    </ul>
-</li>
+      </ul>
+      </li>                                
+    {% endif %}
+
   </ul>
   </nav>
     <div class="about">
