@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentUser = 0         #global variable
@@ -53,7 +53,12 @@ def signin():
     return render_template("signin.html")
 @app.route("/editMyProfil")
 def editMyProfil():
-    return render_template("editMyProfil.html")
+    global currentUser
+    if currentUser == 0:
+        return redirect(url_for("signin"))
+
+    user = Users.query.filter_by(id = currentUser).first()
+    return render_template("editMyProfil.html",user = user)
 
 @app.route("/addFootballArea")
 def addFootballArea():
@@ -86,6 +91,44 @@ def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
 
     return render_template("book_Appointment.html",area=area)
+
+@app.route("/fillcurrentclock/<string:id>/<int:clock>")
+def fillcurrentclock(id,clock):
+    area = FootballArea.query.filter_by(id = id).first()
+    if clock == 0:
+        area.clocks[0].c10 = 1
+    if clock == 1:
+        area.clocks[0].c11 = 1
+    if clock == 2:
+        area.clocks[0].c12 = 1
+    if clock == 3:
+        area.clocks[0].c13 = 1
+    if clock == 4:
+        area.clocks[0].c14 = 1
+    if clock == 5:
+        area.clocks[0].c15 = 1
+    if clock == 6:
+        area.clocks[0].c16 = 1
+    if clock == 7:
+        area.clocks[0].c17 = 1
+    if clock == 8:
+        area.clocks[0].c18 = 1
+    if clock == 9:
+        area.clocks[0].c19 = 1
+    if clock == 10:
+        area.clocks[0].c20 = 1
+    if clock == 11:
+        area.clocks[0].c21 = 1
+    if clock == 12:
+        area.clocks[0].c22 = 1
+    if clock == 13:
+        area.clocks[0].c23 = 1
+    if clock == 14:
+        area.clocks[0].c24 = 1
+        
+    db.session.commit()
+    return render_template("book_Appointment.html",area=area)
+
     
 @app.route("/signup_user",methods = ["POST"])
 def signup_user():
