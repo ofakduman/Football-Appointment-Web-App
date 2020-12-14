@@ -9,7 +9,7 @@ body{
   top: 14%;
   height: 650px;
   width: 1519px;
-  
+  z-index: -1;
   background-size: cover;
 }
 .login-box{

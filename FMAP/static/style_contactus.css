@@ -15,7 +15,6 @@ body{
     background-repeat: no-repeat;
     color: #00ff7c	;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 header{
     position: absolute;
@@ -67,6 +66,8 @@ section i{
     text-align: center;
 }
 .form{
+        z-index: -1;
+
     display: flex;
     position: absolute;
     top: 0;
@@ -312,6 +313,7 @@ nav{
     nav ul{
       margin-right: 0px;
       float: left;
+      z-index: 7;
     }
     nav .logo{
       padding-left: 30px;

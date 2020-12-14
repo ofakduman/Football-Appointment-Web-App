@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <nav>
         <div class="logo">
-      FMA</div>
+            <a href="/homepage">FMA </a></div>
       <label for="btn" class="icon">
           <span class="fa fa-bars"></span>
         </label>
@@ -31,9 +31,12 @@
       </li>
       <li><a href="/aboutus">ABOUT US</a></li>
       <li><a href="/contactus">CONTACT US</a></li>
-      <li><a href="/myprofil">MYPROFIL</a></li>
-      
-      <li>
+      <li><a href="/myprofil">PROFILE</a></li>
+    {% if  user.id != 0 %}
+      <li><a href="/signout">Sign Out</a></li>
+    {% endif %}
+      {% if  user.id == 0 %}
+               <li>
       <label for="btn-1" class="show">Features +</label>
       <a href="#">Sıgn In</a>
       <input class="input1" type="checkbox" id="btn-1">
@@ -41,9 +44,13 @@
         <li><a href="/signin">Sıgn In</a></li>
         <li><a href="/signup">Sıgn Up</a></li>
       </ul>
-      </li>
-      </ul>
+      </li>                                
+    {% endif %}
+
+
+      
       </nav>
+      
         <div class="container emp-profile">
             <form method="post">
                 <div class="row">
@@ -58,9 +65,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="profile-head">
-                                    <h5>
-                                        Muhammed Gelgeçoğlu
-                                    </h5>
+                                    <h1>{{user.name}}</h1>
                                     <h6>
                                         Owner
                                     </h6>
@@ -87,10 +92,10 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
+                                                <label>Username</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>asd_123</p>
+                                                <p>{{user.username}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -98,7 +103,7 @@
                                                 <label>Name</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Mehmet</p>
+                                                <p>{{user.name}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -106,7 +111,7 @@
                                                 <label>Email</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>asd@gmail.com</p>
+                                                <p>{{user.email}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -114,7 +119,7 @@
                                                 <label>Phone</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>0533 XXX XX XX</p>
+                                                <p>{{user.phoneNumber}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -124,13 +129,12 @@
                                             <div class="col-md-6">
                                                 <p>İstanbul/Pendik</p>
                                             </div>
-                                           
-                                            <div class="col-md-6">
+                                            {% if  user.user_type == 1 %}
+                                                <div class="col-md-6">
                                                 <a class="btn btn-primary" href="/addFootballArea">Add Football Area</a>
-                                            </div>
-                                            
+                                                </div>
+                                            {% endif %}
                                         </div>
-                            
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="row">
