@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentUser = 0         #global variable
@@ -146,8 +146,20 @@ def signup_user():
 @app.route("/editMyProfil",methods = ["POST"])
 def edit_profile():
     
-    user = Users.query.get(1)
-    user.name = 'New Name'
+    global currentUser
+    if currentUser == 0:
+        return redirect(url_for("signin"))
+
+    user = Users.query.filter_by(id = currentUser).first()
+    user.name = request.form.get("name")
+    user.username = request.form.get("username")
+    user.password = request.form.get("password")
+    user.email = request.form.get("email")
+    user.phoneNumber = request.form.get("phoneNumber")
+    pass1 = "a" 
+    pass1 = request.form.get("confirmpassword")
+    if user.password != pass1:
+        return redirect(url_for("editMyProfil"))
     db.session.commit()
     
     
