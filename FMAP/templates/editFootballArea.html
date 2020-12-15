@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Football Area</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/static/addFootballArea.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+FMA</div>
+<label for="btn" class="icon">
+      <span class="fa fa-bars"></span>
+    </label>
+    <input class="input1" type="checkbox" id="btn">
+    <ul>
+<li><a href="/homepage">HOME</a></li>
+
+<li>
+        <label for="btn-2" class="show">Services +</label>
+        <a href="/appointment">APPOINTMENT</a>
+        <input class="input1" type="checkbox" id="btn-2">
+        
+</li>
+<li><a href="/aboutus">ABOUT US</a></li>
+<li><a href="/contactus">CONTACT US</a></li>
+<li><a href="/myprofil">PROFILE</a></li>
+
+{% if  id != 0 %}
+      <li><a href="/signout">Sign Out</a></li>
+    {% endif %}
+      {% if  id == 0 %}
+      <li>
+      <label for="btn-1" class="show">Features +</label>
+      <a href="#">Sıgn In</a>
+      <input class="input1" type="checkbox" id="btn-1">
+      <ul>
+        <li><a href="/signin">Sıgn In</a></li>
+        <li><a href="/signup">Sıgn Up</a></li>
+      </ul>
+      </li>                                
+    {% endif %}
+</li>
+</ul>
+</nav>
+    <div style ="margin-Top:30px" class="container">
+        <h3 style="color:white;">Edit Football Area</h3>
+        <form action="/editArea" method="POST">
+      
+          <div class="form-group">
+            <label style="color: white;" for="formGroupExampleInput">Phone Number</label>
+            <input type="text"  name="owner_number" class="form-control" id="formGroupExampleInput" placeholder="Enter Phone Number" value="{{area.OwnerNumber}}" >
+          </div>
+            <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">Football Area Name</label>
+                <input type="text"  name="area_name" class="form-control" id="formGroupExampleInput" placeholder="Enter Area Name" value="{{area.AreaName}}">
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput">City</label>
+                <input type="text"  name="city" class="form-control" id="formGroupExampleInput" placeholder="Enter City" value="{{area.City}}">
+              </div>
+              <div class="form-group">
+                <label style="color: white;" for="formGroupExampleInput2">Football Area Adress</label>
+                <textarea type="text"  name="adress" class="form-control" id="formGroupExampleInput2" placeholder="Enter Adress " >{{area.adress}}</textarea>
+              </div>
+              <button type="submit" class ="btn btn-success">Save Changes</button>
+        </form><br>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

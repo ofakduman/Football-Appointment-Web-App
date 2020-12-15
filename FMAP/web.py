@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentUser = 0         #global variable
@@ -82,9 +82,31 @@ def addArea():
     db.session.add(newClock)
     db.session.commit()
 
-    return redirect(url_for("addFootballArea"))
+    return redirect(url_for("myprofil"))
 
+@app.route("/editFootballArea")
+def editFootballArea():
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
+    id = user.football_areas[0].id
+    area = FootballArea.query.filter_by(id = id).first()
 
+    return render_template("editFootballArea.html",area=area)
+
+@app.route("/editArea",methods = ["POST"])
+def editArea():
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
+    id = user.football_areas[0].id
+    area = FootballArea.query.filter_by(id = id).first()
+
+    area.AreaName = request.form.get("area_name")
+    area.City = request.form.get("city")
+    area.adress = request.form.get("adress")
+    area.OwnerNumber = request.form.get("owner_number")
+    user.phoneNumber = area.OwnerNumber
+    db.session.commit()
+    return redirect(url_for("myprofil"))
 
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
