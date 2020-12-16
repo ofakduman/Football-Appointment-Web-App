@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.file import FileField, FileAllowed
+#from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
 db=SQLAlchemy(app)
@@ -186,7 +186,7 @@ def edit_profile():
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
 
-    picture = FileField('Update Profile Picture', validators = [FileAllowed(['jpg', 'png'])])
+    #picture = FileField('Update Profile Picture', validators = [FileAllowed(['jpg', 'png'])])
     if user.password != pass1:
         return redirect(url_for("editMyProfil"))
     db.session.commit()
