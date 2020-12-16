@@ -8,6 +8,15 @@ db=SQLAlchemy(app)
 
 currentUser = 0         #global variable
 
+
+def setCurrentUser(id):
+    global currentUser
+    currentUser = id
+
+def getUser():
+    global currentUser
+    return currentUser
+
 @app.route("/")
 @app.route("/homepage")
 def homepage():
