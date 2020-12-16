@@ -1,9 +1,10 @@
 from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_wtf.file import FileField, FileAllowed
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
 db=SQLAlchemy(app)
+
 
 currentUser = 0         #global variable
 
@@ -42,11 +43,13 @@ def myprofil():
     
 @app.route("/contactus")
 def contactus():
-    return render_template("contactus.html")
+    global currentUser
+    return render_template("contactus.html", id = currentUser)
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template("aboutus.html")
+    global currentUser
+    return render_template("aboutus.html", id = currentUser)
 
 @app.route("/signin")
 def signin():
@@ -159,10 +162,12 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
+    image_file = url_for('static', filename = 'images/profile_pics/' + "profile1.jpg")
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0, image_file = image_file)
 
     db.session.add(newUser)
     db.session.commit()
+    flash('Your account created SUCCESFULLY!, Please SignIn')
     return redirect(url_for("signin"))
 
 @app.route("/editMyProfil",methods = ["POST"])
@@ -180,14 +185,12 @@ def edit_profile():
     user.phoneNumber = request.form.get("phoneNumber")
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
+
+    picture = FileField('Update Profile Picture', validators = [FileAllowed(['jpg', 'png'])])
     if user.password != pass1:
         return redirect(url_for("editMyProfil"))
     db.session.commit()
-    
-    
-    
-    
-    
+
     return redirect(url_for("myprofil"))
 
 
@@ -231,6 +234,7 @@ class Users(db.Model):
     user_type = db.Column(db.Integer)
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
+    image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
