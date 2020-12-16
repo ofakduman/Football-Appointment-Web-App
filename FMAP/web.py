@@ -162,12 +162,12 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    image_file = url_for('static', filename = 'images/profile_pics/' + "profile1.jpg")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0, image_file = image_file)
+    #image_file = url_for('static', filename = 'images/profile_pics/' + "profile1.jpg")
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0, )
 
     db.session.add(newUser)
     db.session.commit()
-    flash('Your account created SUCCESFULLY!, Please SignIn')
+   # flash('Your account created SUCCESFULLY!, Please SignIn')
     return redirect(url_for("signin"))
 
 @app.route("/editMyProfil",methods = ["POST"])
@@ -234,7 +234,7 @@ class Users(db.Model):
     user_type = db.Column(db.Integer)
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
-    image_file = db.Column(db.String(40), default = 'profil_photo.png')
+    #image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
