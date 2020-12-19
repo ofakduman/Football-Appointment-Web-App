@@ -28,7 +28,11 @@ body{
   left: 0;
   z-index: -1;
 }
-
+.select{
+  margin-left: 630px;
+  margin-top: 30px ;
+  
+}
 
 .form-box{
   display: -moz-grid-group;

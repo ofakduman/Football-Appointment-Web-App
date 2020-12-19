@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -39,8 +39,15 @@ def appointment():
     if currentUser == 0:                    #userId == 0 means there are no valid user  
         return render_template("signin.html", currentUser = currentUser)
     areas = FootballArea.query.all()
-    return render_template("appointment.html",areas=areas)
-
+    return render_template("appointment.html",areas=areas,selection_city = "")
+@app.route("/appointment",methods = ["POST"])
+def searchCity():
+    global currentUser
+    if currentUser == 0:                    #userId == 0 means there are no valid user  
+        return render_template("signin.html", currentUser = currentUser)
+    selection_city = (request.form.get("selection"))
+    areas = FootballArea.query.all()
+    return render_template("appointment.html",areas=areas,selection_city = selection_city)
 @app.route("/myprofil")
 def myprofil():
     global currentUser
