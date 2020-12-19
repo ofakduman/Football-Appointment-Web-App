@@ -2,12 +2,12 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
 currentUser = 0         #global variable
-
+user_DataBase_size = 25
 
 def setCurrentUser(id):
     global currentUser
@@ -169,7 +169,22 @@ def fillcurrentclock(id,clock):
     db.session.commit()
     return render_template("book_Appointment.html",area=area)
 
-    
+
+@app.route("/signup")
+def Check_User(name1):
+    x = 1
+    global user_DataBase_size
+    print(user_DataBase_size)    
+    for x in range(user_DataBase_size):
+        user1 = Users.query.filter_by(id = x).first()
+        if user1:
+            if name1 == user1.username:
+                return False
+        
+    return True
+
+
+
 @app.route("/signup_user",methods = ["POST"])
 def signup_user():
     name = request.form.get("name")
@@ -177,12 +192,11 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    #image_file = url_for('static', filename = 'images/profile_pics/' + "profile1.jpg")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0, )
-
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
+    if Check_User(username) == False :
+        return redirect(url_for("signup"))
     db.session.add(newUser)
     db.session.commit()
-   # flash('Your account created SUCCESFULLY!, Please SignIn')
     return redirect(url_for("signin"))
 
 @app.route("/editMyProfil",methods = ["POST"])
