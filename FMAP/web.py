@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -48,7 +48,11 @@ def myprofil():
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
-    return render_template("myprofil.html", user = user)
+    areas = FootballArea.query.all()
+    
+    return render_template("myprofil.html", user = user,areas=areas)
+    
+
     
 @app.route("/contactus")
 def contactus():
@@ -128,37 +132,39 @@ def bookAppointment(id):
 
 @app.route("/fillcurrentclock/<string:id>/<int:clock>")
 def fillcurrentclock(id,clock):
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
     area = FootballArea.query.filter_by(id = id).first()
     if clock == 0:
-        area.clocks[0].c10 = 1
+        area.clocks[0].c10 = user.id
     if clock == 1:
-        area.clocks[0].c11 = 1
+        area.clocks[0].c11 = user.id
     if clock == 2:
-        area.clocks[0].c12 = 1
+        area.clocks[0].c12 = user.id
     if clock == 3:
-        area.clocks[0].c13 = 1
+        area.clocks[0].c13 = user.id
     if clock == 4:
-        area.clocks[0].c14 = 1
+        area.clocks[0].c14 = user.id
     if clock == 5:
-        area.clocks[0].c15 = 1
+        area.clocks[0].c15 = user.id
     if clock == 6:
-        area.clocks[0].c16 = 1
+        area.clocks[0].c16 = user.id
     if clock == 7:
-        area.clocks[0].c17 = 1
+        area.clocks[0].c17 = user.id
     if clock == 8:
-        area.clocks[0].c18 = 1
+        area.clocks[0].c18 = user.id
     if clock == 9:
-        area.clocks[0].c19 = 1
+        area.clocks[0].c19 = user.id
     if clock == 10:
-        area.clocks[0].c20 = 1
+        area.clocks[0].c20 = user.id
     if clock == 11:
-        area.clocks[0].c21 = 1
+        area.clocks[0].c21 = user.id
     if clock == 12:
-        area.clocks[0].c22 = 1
+        area.clocks[0].c22 = user.id
     if clock == 13:
-        area.clocks[0].c23 = 1
+        area.clocks[0].c23 = user.id
     if clock == 14:
-        area.clocks[0].c24 = 1
+        area.clocks[0].c24 = user.id
         
     db.session.commit()
     return render_template("book_Appointment.html",area=area)
