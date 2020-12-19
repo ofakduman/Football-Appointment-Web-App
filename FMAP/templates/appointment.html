@@ -41,6 +41,22 @@ FMA</div>
 </li>
 </ul>
 </nav>
+
+<div class="select">
+  <form  action="/appointment" method="POST">
+    <select  name="selection">
+    {% for area in areas  %}
+    <option >{{area.City}}</option>
+    {% endfor %}
+    </select>
+    <label style= "color: white; ">Select City</label>
+    
+    <input style=" margin-left:-165px; margin-top: 70px;" class="btn btn-primary btn-sm" type="submit" value="Select">
+  </form>
+
+
+</div>
+
     <div class="container">
         
         <table class="table table-hover table-dark">
@@ -57,6 +73,7 @@ FMA</div>
               
             </tr>
           </thead>
+          {% if selection_city == "" %}
           <tbody>
             {% for area in areas  %}
                 <tr>
@@ -71,6 +88,27 @@ FMA</div>
                 </tr>
                 {% endfor %}
           </tbody>
+            {% endif %}
+
+            {% if selection_city != "" %}
+          <tbody>
+            {% for area in areas  %}
+                {% if area.City == selection_city %}
+                <tr>
+                  <th scope="row">{{area.id}}</th>
+                  <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
+                  <td>{{area.OwnerName}}</td>
+                  <td>{{area.OwnerNumber}}</td>
+                  <td>{{area.AreaName}}</td>
+                  <td>{{area.City}}</td>
+                  <td>{{area.adress}}</td>
+                  <td><a href="/bookAppointment/{{area.id}}" class="btn btn-success">Book Appointment</a></td>
+                  </tr>
+                  {% endif %}
+                  
+            </tbody>
+            {% endfor %}
+            {% endif %}
         </table>
 
 
