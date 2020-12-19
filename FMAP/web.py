@@ -1,12 +1,21 @@
 from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-
+#from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
+
 currentUser = 0         #global variable
-user_DataBase_size = 0
+
+
+def setCurrentUser(id):
+    global currentUser
+    currentUser = id
+
+def getUser():
+    global currentUser
+    return currentUser
 
 @app.route("/")
 @app.route("/homepage")
@@ -16,7 +25,6 @@ def homepage():
 
 @app.route("/signup")
 def signup():
-    ++ user_DataBase_size
     return render_template("signup.html")
 
 @app.route("/signout")
@@ -44,11 +52,13 @@ def myprofil():
     
 @app.route("/contactus")
 def contactus():
-    return render_template("contactus.html")
+    global currentUser
+    return render_template("contactus.html", id = currentUser)
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template("aboutus.html")
+    global currentUser
+    return render_template("aboutus.html", id = currentUser)
 
 @app.route("/signin")
 def signin():
@@ -84,9 +94,31 @@ def addArea():
     db.session.add(newClock)
     db.session.commit()
 
-    return redirect(url_for("addFootballArea"))
+    return redirect(url_for("myprofil"))
 
+@app.route("/editFootballArea")
+def editFootballArea():
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
+    id = user.football_areas[0].id
+    area = FootballArea.query.filter_by(id = id).first()
 
+    return render_template("editFootballArea.html",area=area)
+
+@app.route("/editArea",methods = ["POST"])
+def editArea():
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
+    id = user.football_areas[0].id
+    area = FootballArea.query.filter_by(id = id).first()
+
+    area.AreaName = request.form.get("area_name")
+    area.City = request.form.get("city")
+    area.adress = request.form.get("adress")
+    area.OwnerNumber = request.form.get("owner_number")
+    user.phoneNumber = area.OwnerNumber
+    db.session.commit()
+    return redirect(url_for("myprofil"))
 
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
@@ -130,15 +162,6 @@ def fillcurrentclock(id,clock):
         
     db.session.commit()
     return render_template("book_Appointment.html",area=area)
-@app.route("/signup")
-def Check_User(name1):
-    x = 0
-    for x in range(user_DataBase_size):
-        print(x)
-        user1 = Users.query.filter_by(id = x).first()
-        if name1 == user1.username :
-            return False
-    return True
 
     
 @app.route("/signup_user",methods = ["POST"])
@@ -148,11 +171,12 @@ def signup_user():
     username = request.form.get("user_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
-    if Check_User(username) == False :
-        return redirect(url_for("signup"))
+    #image_file = url_for('static', filename = 'images/profile_pics/' + "profile1.jpg")
+    newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0, )
+
     db.session.add(newUser)
     db.session.commit()
+   # flash('Your account created SUCCESFULLY!, Please SignIn')
     return redirect(url_for("signin"))
 
 @app.route("/editMyProfil",methods = ["POST"])
@@ -170,14 +194,12 @@ def edit_profile():
     user.phoneNumber = request.form.get("phoneNumber")
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
+
+    #picture = FileField('Update Profile Picture', validators = [FileAllowed(['jpg', 'png'])])
     if user.password != pass1:
         return redirect(url_for("editMyProfil"))
     db.session.commit()
-    
-    
-    
-    
-    
+
     return redirect(url_for("myprofil"))
 
 
@@ -221,6 +243,7 @@ class Users(db.Model):
     user_type = db.Column(db.Integer)
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
+    #image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)

@@ -1,7 +1,45 @@
 import unittest
-from web import app
+from web import app, currentUser, setCurrentUser, getUser
+
+
+
+class requireUserLoginTest(unittest.TestCase):
+
+
+	def test_notToSignIn(self):
+		self.assertEqual(getUser(), 0)
+
+	# Ensure that addArea page requires user login -Now there is a problem because We already work this page-
+	def test_main_route_requires_addArea(self):
+		response = self.client.get('/addArea', follow_redirects=True)
+		self.assertIn(b'Please log in to access this page', response.data)
+
+	# Ensure that myprofil page requires user login -Now there is a problem because We already work this page-
+	def test_main_route_requires_myprofil(self):
+		response = self.client.get('/myprofil', follow_redirects=True)
+		self.assertIn(b'Please log in to access this page', response.data)
+
+	# Ensure that addFootballArea page requires user login 
+	def test_main_route_requires_addFootballArea(self):
+		response = self.client.get('/addFootballArea', follow_redirects=True)
+		self.assertIn(b'Please log in to access this page', response.data)
+	
+
+
 
 class FlaskTestCase(unittest.TestCase):
+
+	#In our web application userId = 1 is represents a user which userId's one
+	def test_ToSignIn(self):
+		setCurrentUser(1)
+		self.assertEqual(getUser(), 1)
+
+	#For ensure that signOut page was load correctlly
+
+	def test_signout(self):
+		tester = app.test_client(self)
+		response = tester.get('/signout', content_type = 'html/text')
+		self.assertEqual(response.status_code, 200)
 
 	#For ensure that homepage was load correctlly
 
@@ -17,6 +55,7 @@ class FlaskTestCase(unittest.TestCase):
 		response = tester.get('/signup', content_type = 'html/text')
 		self.assertEqual(response.status_code, 200)
 
+
 	#For ensure that appoinment page was load correctlly
 
 	def test_appointment(self):
@@ -29,7 +68,7 @@ class FlaskTestCase(unittest.TestCase):
 	def test_myprofil(self):
 		tester = app.test_client(self)
 		response = tester.get('/myprofil', content_type = 'html/text')
-		self.assertEqual(response.status_code, 404)#not constructed page 
+		self.assertEqual(response.status_code, 200)#not access directly
 
 	#For ensure that contactus page was load correctlly
 
@@ -50,6 +89,13 @@ class FlaskTestCase(unittest.TestCase):
 	def test_signin(self):
 		tester = app.test_client(self)
 		response = tester.get('/signin', content_type = 'html/text')
+		self.assertEqual(response.status_code, 200)
+
+	#For ensure that signin page was load correctlly
+
+	def test_editMyProfil(self):
+		tester = app.test_client(self)
+		response = tester.get('/editMyProfil', content_type = 'html/text')
 		self.assertEqual(response.status_code, 200)		
 
 	#For ensure that signin page was load correctlly
@@ -57,25 +103,20 @@ class FlaskTestCase(unittest.TestCase):
 	def test_addFootballArea(self):
 		tester = app.test_client(self)
 		response = tester.get('/addFootballArea', content_type = 'html/text')
-		self.assertEqual(response.status_code, 404)#not constructed page
+		self.assertEqual(response.status_code, 200)
+	
+	#For ensure that signin page was load correctlly
 
-class requireUserLoginTest(unittest.TestCase):
+	def test_addArea(self):
+		tester = app.test_client(self)
+		response = tester.get('/addArea', content_type = 'html/text')
+		self.assertEqual(response.status_code, 405)#there is an error!!!!!!
 
-	# Ensure that addArea page requires user login -Now there is a problem because We already work this page-
-	def test_main_route_requires_addArea(self):
-		response = self.client.get('/addArea', follow_redirects=True)
-		self.assertIn(b'Please log in to access this page', response.data)
-
-	# Ensure that myprofil page requires user login -Now there is a problem because We already work this page-
-	def test_main_route_requires_myprofil(self):
-		response = self.client.get('/myprofil', follow_redirects=True)
-		self.assertIn(b'Please log in to access this page', response.data)
-
-	# Ensure that addFootballArea page requires user login 
-	def test_main_route_requires_addFootballArea(self):
-		response = self.client.get('/addFootballArea', follow_redirects=True)
-		self.assertIn(b'Please log in to access this page', response.data)
-
+	#For ensure that signin page was load correctlly
+	def test_editFootballArea(self):
+		tester = app.test_client(self)
+		response = tester.get('/editFootballArea', content_type = 'html/text')
+		self.assertEqual(response.status_code, 500)#there is an error!!!!!!
 
 class usetTest(unittest.TestCase):
 
@@ -83,6 +124,7 @@ class usetTest(unittest.TestCase):
 	def test_posts_show_up_on_main_page(self):
 		response = self.client.post('/sigin',data=Users(name="admin", password="admin"),follow_redirects=True)
 		self.assertIn(b'This is a test. Only a test.', response.data)
+
 
 if __name__ == '__main__':
 	unittest.main()	
