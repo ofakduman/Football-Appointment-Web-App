@@ -6,6 +6,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/
 db=SQLAlchemy(app)
 
 currentUser = 0         #global variable
+user_DataBase_size = 0
 
 @app.route("/")
 @app.route("/homepage")
@@ -15,6 +16,7 @@ def homepage():
 
 @app.route("/signup")
 def signup():
+    ++ user_DataBase_size
     return render_template("signup.html")
 
 @app.route("/signout")
@@ -128,6 +130,15 @@ def fillcurrentclock(id,clock):
         
     db.session.commit()
     return render_template("book_Appointment.html",area=area)
+@app.route("/signup")
+def Check_User(name1):
+    x = 0
+    for x in range(user_DataBase_size):
+        print(x)
+        user1 = Users.query.filter_by(id = x).first()
+        if name1 == user1.username :
+            return False
+    return True
 
     
 @app.route("/signup_user",methods = ["POST"])
@@ -138,7 +149,8 @@ def signup_user():
     email = request.form.get("email")
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
-
+    if Check_User(username) == False :
+        return redirect(url_for("signup"))
     db.session.add(newUser)
     db.session.commit()
     return redirect(url_for("signin"))
