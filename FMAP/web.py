@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -59,7 +59,10 @@ def myprofil():
     
     return render_template("myprofil.html", user = user,areas=areas)
     
-
+@app.route("/payment")
+def payment():
+    global currentUser
+    return render_template("payment.html", id = currentUser)
     
 @app.route("/contactus")
 def contactus():
@@ -189,7 +192,7 @@ def fillcurrentclock(id,clock):
         area.clocks[0].c24 = user.id
         
     db.session.commit()
-    return render_template("book_Appointment.html",area=area)
+    return redirect(url_for("payment"))
 
 
 @app.route("/signup")
