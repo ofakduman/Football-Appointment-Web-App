@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -99,7 +99,7 @@ def addArea():
     OwnerNumber = request.form.get("owner_number")
     user.phoneNumber = OwnerNumber
     owner_name = user.name   
-    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = user)
+    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = user,LikeCoun=0)
     newClock = Clocks(c10 = 0,owner_area = newArea, c11 = 0,c12 = 0,c13 = 0,c14 = 0,c15 = 0,c16 = 0,c17 = 0,c18 = 0,c19 = 0,c20 = 0,c21 = 0, c22 = 0,c23 = 0,c24 = 0)
     db.session.add(newArea)
     db.session.add(newClock)
@@ -136,6 +136,21 @@ def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
 
     return render_template("book_Appointment.html",area=area)
+@app.route("/incrementlike/<int:curent_id>")
+def incrementlike(curent_id):
+    global currentUser
+    area = FootballArea.query.filter_by(id = curent_id).first()
+    area.LikeCoun +=1
+    db.session.commit()
+    return redirect(url_for("appointment"))
+@app.route("/decrementlike/<int:curent_id>")
+def decrementlike(curent_id):
+    global currentUser
+    area = FootballArea.query.filter_by(id = curent_id).first()
+    area.LikeCoun -=1
+    db.session.commit()
+    return redirect(url_for("appointment"))
+
 
 @app.route("/fillcurrentclock/<string:id>/<int:clock>")
 def fillcurrentclock(id,clock):
@@ -277,10 +292,12 @@ class FootballArea(db.Model):
     OwnerName = db.Column(db.String(80))
     OwnerNumber = db.Column(db.String(80))
     AreaName = db.Column(db.String(80))
+    LikeCoun = db.Column(db.Integer)
     City = db.Column(db.String(80))
     adress = db.Column(db.Text)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     clocks = db.relationship('Clocks',backref = 'owner_area')
+    
 
 class Clocks(db.Model):
     id = db.Column(db.Integer,primary_key = True)

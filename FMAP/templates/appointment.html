@@ -1,6 +1,7 @@
 {% block title %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_appointment.css')}}">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>Appointment</title>
 {% endblock %}
 {% block content %}
@@ -63,7 +64,8 @@ FMA</div>
           <thead>
             <tr>
               <th scope="col">id</th>
-              <th scope="col">Photograph</th>   
+              <th scope="col">Photograph</th>
+              <th scope="col">Like</th>   
               <th scope="col">Owner Name</th>
               <th scope="col">Owner Phone Number</th>
               <th scope="col">Football Area Name</th>
@@ -79,14 +81,17 @@ FMA</div>
                 <tr>
                 <th scope="row">{{area.id}}</th>
                 <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
+                <td><p><a id="clicks">{{area.LikeCoun}}</a></p></td>
                 <td>{{area.OwnerName}}</td>
                 <td>{{area.OwnerNumber}}</td>
                 <td>{{area.AreaName}}</td>
                 <td>{{area.City}}</td>
                 <td>{{area.adress}}</td>
-                <td><a href="/bookAppointment/{{area.id}}" class="btn btn-success">Book Appointment</a></td>
+                <td><a href="/bookAppointment/{{area.id}}" class="btn btn-success">Book Appointment  </a><br><a href="/incrementlike/{{area.id}}"  class="btn btn-primary"> <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i></a><a href="/decrementlike/{{area.id}}"  class="btn btn-primary"> <i onclick="myFunction(this)" class="fa fa-thumbs-down"></i></a></td>
                 </tr>
+                
                 {% endfor %}
+                
           </tbody>
             {% endif %}
 
