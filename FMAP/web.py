@@ -17,6 +17,19 @@ def getUser():
     global currentUser
     return currentUser
 
+def createNewUser():
+    newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
+    db.session.add(newOwner)
+    db.session.commit()
+    return 'User added succesfully!'
+
+def deleteAUser():
+    user = Users.query.filter_by(user_type = 8).first()
+    db.session.delete(user)
+    db.session.commit()
+    print("user.name = ", user.name)
+    return 'User deleted succesfully!'
+
 @app.route("/")
 @app.route("/homepage")
 def homepage():
