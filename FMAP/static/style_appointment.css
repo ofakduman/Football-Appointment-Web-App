@@ -31,6 +31,19 @@ body{
 .select{
   margin-left: 630px;
   margin-top: 30px ;
+  padding: 0;
+  
+}
+.selection{
+  width: 250px;
+  color: #0855b9;
+  border: none;
+  cursor: pointer;
+  transition: 3s;
+  border: none;
+  border-radius: 100px;
+  transition: top .3s;
+  background-size:cover;
   
 }
 
