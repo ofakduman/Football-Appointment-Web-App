@@ -43,19 +43,17 @@ FMA</div>
 </ul>
 </nav>
 
-<div class="select">
+<div class="select" >
   <form  action="/appointment" method="POST">
-    <select  name="selection">
+    <select class="selection" name="selection">
     {% for area in areas  %}
     <option >{{area.City}}</option>
     {% endfor %}
     </select>
     <label style= "color: white; ">Select City</label>
     
-    <input style=" margin-left:-165px; margin-top: 70px;" class="btn btn-primary btn-sm" type="submit" value="Select">
+    <input style=" margin-left:-137px; margin-top: 70px;" class="btn btn-primary btn-sm" type="submit" value="Select">
   </form>
-
-
 </div>
 
     <div class="container">
