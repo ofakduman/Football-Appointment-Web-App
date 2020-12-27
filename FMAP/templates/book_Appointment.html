@@ -9,41 +9,41 @@
 
   <nav>
     <div class="logo">
-FMA</div>
-<label for="btn" class="icon">
+  FMA</div>
+  <label for="btn" class="icon">
       <span class="fa fa-bars"></span>
     </label>
     <input class="input1" type="checkbox" id="btn">
     <ul>
-<li><a href="/homepage">HOME</a></li>
-
-<li>
-        <label for="btn-2" class="show">Services +</label>
+  <li><a href="/homepage">HOME</a></li>
+  
+  <li>
+        
         <a href="/appointment">APPOINTMENT</a>
         <input class="input1" type="checkbox" id="btn-2">
         
-</li>
-<li><a href="/aboutus">ABOUT US</a></li>
-<li><a href="/contactus">CONTACT US</a></li>
-<li><a href="/myprofil">PROFILE</a></li>
-
-  {% if  id != 0 %}
-      <li><a href="/signout">Sign Out</a></li>
-    {% endif %}
-      {% if  id == 0 %}
-      <li>
-      <label for="btn-1" class="show">Features +</label>
-      <a href="#">Sıgn In</a>
-      <input class="input1" type="checkbox" id="btn-1">
-      <ul>
-        <li><a href="/signin">Sıgn In</a></li>
-        <li><a href="/signup">Sıgn Up</a></li>
-      </ul>
-      </li>                                
-    {% endif %}
-</li>
-</ul>
-</nav>
+  </li>
+  <li><a href="/aboutus">ABOUT US</a></li>
+  <li><a href="/contactus">CONTACT US</a></li>
+  <li><a href="/myprofil">PROFILE</a></li>
+  
+      {% if  id != 0 %}
+        <li><a href="/signout">Sign Out</a></li>
+      {% endif %}
+        {% if  id == 0 %}
+        <li>
+        <label for="btn-1" class="show">Features +</label>
+        <a href="#">Sıgn In</a>
+        <input class="input1" type="checkbox" id="btn-1">
+        <ul>
+          <li><a href="/signin">Sıgn In</a></li>
+          <li><a href="/signup">Sıgn Up</a></li>
+        </ul>
+        </li>                                
+      {% endif %}
+  </li>
+  </ul>
+  </nav>
     <img src="/static/images/halısaha1.jpg" alt="" height="200" width="350"/> 
     <img src="/static/images/halısaha2.jpg" alt="" height="200" width="350"/>
     <img src="/static/images/halısaha4.jpg" alt="" height="200" width="350"/>
@@ -191,7 +191,7 @@ FMA</div>
   <div class="col-sm-5">
   <div class="panel panel-default">
   <div class="panel-heading">
-  <strong>{{comment.owner_User}}</strong> <span class="text-muted">commented 5 days ago</span>
+  <strong>{{comment.owner_User}}</strong> <span class="text-muted">commented on {{comment.Day}}/{{comment.Month}}/{{comment.Year}} at {{comment.Hour}}:{{comment.Minute}}</span>
   </div>
   <div class="panel-body">
   {{comment.Com}}
@@ -202,8 +202,9 @@ FMA</div>
       
     {% endfor %}  
     <form id="owner" class="input-group" action="/addComment/{{area.id}}" method="POST">
-      <input type="text" name="Comment" class="input-field" placeholder="Comment" required>
+      <input type="text" name="Comment" class="input-field" placeholder="Comment" required> 
       <button type="submit" class="submit-btn">Comment</button>
+  
   </form>  
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
