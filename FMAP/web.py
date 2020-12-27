@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Software Project/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 
@@ -163,8 +163,23 @@ def editArea():
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
+    comments = comment.query.all()
+    
 
-    return render_template("book_Appointment.html",area=area)
+    return render_template("book_Appointment.html",area=area,comments=comments)
+@app.route("/addComment/<string:id>",methods=['GET','POST'])    
+def addComment(id):
+    global currentUser
+    User = Users.query.filter_by(id = currentUser).first()
+    area = FootballArea.query.filter_by(id = id).first()
+    com = request.form.get("Comment")
+    owner_Com = area.id
+    owner_User = User.name
+    newComment = comment(Com = com,owner_Com=owner_Com,owner_User=owner_User)
+    db.session.add(newComment)
+    db.session.commit()
+    comments = comment.query.all()
+    return render_template("book_Appointment.html",area=area,comments=comments)
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
     global currentUser
@@ -244,9 +259,11 @@ def signup_user():
     email = request.form.get("email")
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
+    newComment=comment(Com="Bos",owner_Com="1",owner_User="None")
     if Check_User(username) == False :
         return redirect(url_for("signup"))
     db.session.add(newUser)
+    db.session.add(newComment)
     db.session.commit()
     return redirect(url_for("signin"))
 
@@ -316,8 +333,9 @@ class Users(db.Model):
     phoneNumber = db.Column(db.String(80), default = 'none')
     #image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
-class Comment(db.Model):
+class comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
+    owner_User = db.Column(db.String(80))
     owner_Com = db.Column(db.Integer)
     Com  =  db.Column(db.String(80))
 
