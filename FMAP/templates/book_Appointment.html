@@ -179,7 +179,7 @@
     
   
   {% for comment in comments  %}
-    
+  {% if area.id == comment.owner_Com %}
 <div class="container">
   <div class="row">
   <div class="col-sm-1">
@@ -199,11 +199,11 @@
   </div><!-- /panel panel-default -->
   </div><!-- /col-sm-5 -->
   
-      
+  {% endif %}  
     {% endfor %}  
     <form id="owner" class="input-group" action="/addComment/{{area.id}}" method="POST">
-      <input type="text" name="Comment" class="input-field" placeholder="Comment" required> 
-      <button type="submit" class="submit-btn">Comment</button>
+      <input style="position: absolute; left: 15%;"s type="text" name="Comment" class="input-field" placeholder="Comment" required> 
+      <button style="position: absolute; left: 30%;" type="submit" class="submit-btn">Comment</button>
   
   </form>  
     
