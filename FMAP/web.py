@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
@@ -170,12 +171,18 @@ def bookAppointment(id):
 @app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
+    an = datetime.now()
     User = Users.query.filter_by(id = currentUser).first()
     area = FootballArea.query.filter_by(id = id).first()
     com = request.form.get("Comment")
     owner_Com = area.id
     owner_User = User.name
-    newComment = comment(Com = com,owner_Com=owner_Com,owner_User=owner_User)
+    owner_Y = an.year
+    owner_M = an.month
+    owner_D = an.day
+    owner_H = an.hour
+    owner_M = an.minute
+    newComment = comment(Com = com,owner_Com=owner_Com,owner_User=owner_User,Year=owner_Y,Month=owner_M,Day=owner_D,Hour=owner_H,Minute=owner_M)
     db.session.add(newComment)
     db.session.commit()
     comments = comment.query.all()
@@ -259,7 +266,7 @@ def signup_user():
     email = request.form.get("email")
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
-    newComment=comment(Com="Bos",owner_Com="1",owner_User="None")
+    newComment=comment(Com="Bos",owner_Com="1",owner_User="None",Year=0,Month=0,Day=0,Hour=1,Minute=2)
     if Check_User(username) == False :
         return redirect(url_for("signup"))
     db.session.add(newUser)
@@ -338,6 +345,11 @@ class comment(db.Model):
     owner_User = db.Column(db.String(80))
     owner_Com = db.Column(db.Integer)
     Com  =  db.Column(db.String(80))
+    Year = db.Column(db.Integer)
+    Month = db.Column(db.Integer)
+    Day = db.Column(db.Integer)
+    Hour = db.Column(db.Integer)
+    Minute = db.Column(db.Integer)
 
 class FootballArea(db.Model):
     id = db.Column(db.Integer,primary_key = True)
