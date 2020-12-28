@@ -3,16 +3,48 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/static/style_editMyProfil.css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<nav>
+  <div class="logo">
+FMA</div>
+<label for="btn" class="icon">
+    <span class="fa fa-bars"></span>
+  </label>
+  
+  <ul>
+<li><a href="/homepage">HOME</a></li>
+
+<li>
+      
+      <a href="/appointment">APPOINTMENT</a>
+      
+      
+</li>
+<li><a href="/aboutus">ABOUT US</a></li>
+<li><a href="/contactus">CONTACT US</a></li>
+<li><a href="/myprofil">PROFILE</a></li>
+
+    {% if  id != 0 %}
+      <li><a href="/signout">Sign Out</a></li>
+    {% endif %}
+      {% if  id == 0 %}
+      <li>
+      <label for="btn-1" class="show">Features +</label>
+      <a href="#">Sıgn In</a>
+      <input class="input1" type="checkbox" id="btn-1">
+      <ul>
+        <li><a href="/signin">Sıgn In</a></li>
+        <li><a href="/signup">Sıgn Up</a></li>
+      </ul>
+      </li>                                
+    {% endif %}
+</li>
+</ul>
+</nav>
 <div class="container">
 <div class="row flex-lg-nowrap">
-  <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
-    <div class="card p-3">
-      <div class="e-navlist e-navlist--active-bg">
-        
-      </div>
-    </div>
-  </div>
+  
 
   <div class="col">
     <div class="row">

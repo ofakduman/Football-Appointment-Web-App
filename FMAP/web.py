@@ -3,9 +3,11 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
+currentEnablet = True
+currentEnablef = True
 currentUser = 0         #global variable
 user_DataBase_size = 25
 
@@ -189,18 +191,31 @@ def addComment(id):
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
     global currentUser
-    area = FootballArea.query.filter_by(id = curent_id).first()
-    area.LikeCoun +=1
-    db.session.commit()
-    return redirect(url_for("appointment"))
+    global currentEnablef
+    global currentEnablet
+    if currentEnablet == True :
+        area = FootballArea.query.filter_by(id = curent_id).first()
+        area.LikeCoun +=1
+        db.session.commit()
+        currentEnablet = False ;
+        currentEnablef = True  
+        return redirect(url_for("appointment"))
+    else :
+        return redirect(url_for("appointment"))
 @app.route("/decrementlike/<int:curent_id>")
 def decrementlike(curent_id):
     global currentUser
-    area = FootballArea.query.filter_by(id = curent_id).first()
-    area.LikeCoun -=1
-    db.session.commit()
-    return redirect(url_for("appointment"))
-
+    global currentEnablet
+    global currentEnablef
+    if currentEnablef == True : 
+        area = FootballArea.query.filter_by(id = curent_id).first()
+        area.LikeCoun -=1
+        db.session.commit()
+        currentEnablef = False
+        currentEnablet = True
+        return redirect(url_for("appointment"))
+    else :
+        return redirect(url_for("appointment"))
 
 @app.route("/fillcurrentclock/<string:id>/<int:clock>")
 def fillcurrentclock(id,clock):
@@ -259,6 +274,10 @@ def Check_User(name1):
 
 @app.route("/signup_user",methods = ["POST"])
 def signup_user():
+    global currentEnablet
+    currentEnablet = True
+    global currentEnablef 
+    currentEnablef = True
     name = request.form.get("name")
     surname = request.form.get("surname")
     username = request.form.get("user_name")
