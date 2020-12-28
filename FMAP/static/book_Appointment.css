@@ -1,6 +1,6 @@
 body{
   background: url(/static/images/back2.jpg) no-repeat;
-  background-size:cover;
+  background-size:5000px;
   margin: 0;
   padding: 0;
 }
@@ -218,4 +218,16 @@ margin-left:2px;
 .panel>.panel-heading:before{
 border-right-color:#ddd;
 border-width:8px;
+}
+.pb-cmnt-container {
+  font-family: Lato;
+  margin-top: 100px;
+}
+
+.pb-cmnt-textarea {
+  resize: none;
+  padding: 20px;
+  height: 130px;
+  width: 100%;
+  border: 1px solid #F2F2F2;
 }
