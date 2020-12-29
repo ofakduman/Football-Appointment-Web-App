@@ -71,10 +71,10 @@
                                     </h6>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="/myprofil" role="tab" aria-controls="home" aria-selected="true" >About</a>
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true" >About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="/myprofil/appointments" role="tab" aria-controls="profile" aria-selected="false">Appointments</a>
+                                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="" role="tab" aria-controls="profile" aria-selected="false">Appointments</a>
                                 </li>
                             </ul>
                         </div>
@@ -130,7 +130,289 @@
                                                 <p>{{user.phoneNumber}}</p>
                                             </div>
                                         </div>
-                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Appointments</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>1</p>
+                                            </div>
+                                        </div>
+                                        {% for area in areas  %}
+                                            {% for clocks in area.clocks %}
+                                            {% if clocks.c10 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>10.00 - 11.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c11 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>11.00 - 12.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c12 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>12.00 - 13.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c13 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>13.00 - 14.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c14 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>14.00 - 15.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c15 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>15.00 - 16.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c16 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>16.00 - 17.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c17 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>17.00 - 18.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c18 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>18.00 - 19.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c19 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>19.00 - 20.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c20 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>20.00 - 21.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c21 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>21.00 - 22.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c22 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>22.00 - 23.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c23 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>23.00 - 24.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if clocks.c24 == user.id  %}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Area Name</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{area.AreaName}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Hour</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>24.00 - 24.00</p>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        {% endfor %}
                                             {% if  user.user_type == 1 %}
                                                 {% if user.football_areas[0] != NULL  %}
                                                 <div class="row">

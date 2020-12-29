@@ -3,7 +3,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Documents/GitHub/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
@@ -73,18 +73,6 @@ def myprofil():
     areas = FootballArea.query.all()
     
     return render_template("myprofil.html", user = user,areas=areas)
-
-@app.route("/myprofil/appointments")
-def myAppointments():
-    global currentUser
-    if currentUser == 0:
-        return redirect(url_for("signin"))
-
-    user = Users.query.filter_by(id = currentUser).first()
-    areas = FootballArea.query.all()
-    
-    return render_template("myAppointments.html", user = user,areas=areas)
-
     
 @app.route("/payment")
 def payment():
