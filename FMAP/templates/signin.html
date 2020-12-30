@@ -4,6 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Sign In</title>
+    
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
@@ -52,6 +53,13 @@
   </li>
     </ul>
     </nav>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <h1 style="color:rgb(255, 0, 0);">{{message}}</h1>
+        {% endfor %}
+  {% endif %}
+{% endwith %}
       <div class="container">
         
         

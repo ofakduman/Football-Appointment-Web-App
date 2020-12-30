@@ -1,9 +1,10 @@
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,url_for
+from flask import Flask,render_template,request,redirect,url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
 app = Flask(__name__) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Project/FMAP/database.db'
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
@@ -354,7 +355,8 @@ def signin_user():
         if user_check:
             if user_check.password == password:
                 return redirect(url_for("myprofil")) #passing with userId to url for book appoinment
-        return '<h1>Invalid username or password.</h1>'
+        flash("Invalid username or password !!!" , "error")
+        return render_template("signin.html")
     else:
         return render_template("signin.html")
 
