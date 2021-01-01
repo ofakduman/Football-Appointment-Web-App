@@ -114,6 +114,7 @@ def myprofil():
         image = base64.b64encode(pp.img).decode('ascii')
     if not pp:
         image = -1 #-1 is a magic number to represent not found image
+
     return render_template("myprofil.html", user = user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
@@ -124,8 +125,14 @@ def myAppointments():
 
     user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
+    pp = Img.query.filter_by(users_id =currentUser).first()
     
-    return render_template("myAppointments.html", user = user,areas=areas)
+    if pp:
+        image = base64.b64encode(pp.img).decode('ascii')
+    if not pp:
+        image = -1 #-1 is a magic number to represent not found image
+    
+    return render_template("myAppointments.html", user = user,areas=areas, image = image)
 
     
 @app.route("/payment")
