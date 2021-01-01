@@ -1,15 +1,32 @@
 import unittest
-from web import app, currentUser, setCurrentUser, getUser, createNewUser, deleteAUser
+
+from web import app, currentUser, setCurrentUser, getUser, createNewUser, deleteAUser, createArea, deleteArea
+
+#import helperTestFunc
 
 
+
+'''
+# Yorum sayfasina yorum unit_testi eklenecek "2 tane"
+# Web.py dosyasindaki unittest icin olan helper fonksiyonlar yeni bir dosyaya atanacak
+# area ile user arasindaki iliski test edilecek
+# db icin olusturulan kullanici tum test islemleri sonrasinda silinecek 
+
+'''
 
 class requireUserLoginTest(unittest.TestCase):
 
 	
-	def test_addedSuccesfully(self):
+	def test_userAddedSuccesfully(self):
 		self.assertEqual(createNewUser(), 'User added succesfully!')
 
-	def test_deleteSuccesfully(self):
+	def test_areaAddedSuccesfully(self):
+		self.assertEqual(createArea(), 'Area added succesfully!')
+
+	def test_areaDeletedSuccesfully(self):
+		self.assertEqual(deleteArea(), 'Area deleted succesfully!')
+
+	def test_userDeleteSuccesfully(self):
 		self.assertEqual(deleteAUser(), 'User deleted succesfully!')
 
 	def test_notToSignIn(self):

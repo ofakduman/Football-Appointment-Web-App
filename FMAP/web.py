@@ -13,7 +13,7 @@ db=SQLAlchemy(app)
 
 currentEnablet = True
 currentEnablef = True
-currentUser = 0         #global variable
+currentUser = 0         
 user_DataBase_size = 25
 
 def setCurrentUser(id):
@@ -25,18 +25,7 @@ def getUser():
     return currentUser
 
 
-def createNewUser():
-    newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
-    db.session.add(newOwner)
-    db.session.commit()
-    return 'User added succesfully!'
 
-def deleteAUser():
-    user = Users.query.filter_by(user_type = 8).first()
-    db.session.delete(user)
-    db.session.commit()
-    print("user.name = ", user.name)
-    return 'User deleted succesfully!'
 
 
 @app.route('/<int:id>')
@@ -75,7 +64,8 @@ def upload():
         image.mimetype = mimetype
         image.name = filename
         db.session.commit()
-        return ' You have changed already a pp!!', 200
+        #flash("Photo Uploaded" , "200")
+        return redirect(url_for("myprofil"))
 
 @app.route("/")
 @app.route("/homepage")
@@ -478,3 +468,103 @@ class Clocks(db.Model):
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
+
+
+
+    ######################################  Test Functions  #################################
+
+'''def createNewUser():
+    newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
+    db.session.add(newOwner)
+    db.session.commit()
+    return 'User added succesfully!'
+
+def deleteAUser():
+    user = Users.query.filter_by(user_type = 8).first()
+    db.session.delete(user)
+    db.session.commit()
+    print("user.name = ", user.name)
+    return 'User deleted succesfully!'
+'''
+
+def createNewUser():
+    newOwner = Users(name = 'TemelReis',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = -1)
+    db.session.add(newOwner)
+    db.session.commit()
+    user = Users.query.filter_by(user_type = -1).first()
+
+    if user:                #If added there must be a user who has user_type -1
+        return 'User added succesfully!'
+
+    return 'User didnt add, Error!'
+
+def createArea():
+    user = Users.query.filter_by(user_type = -1).first()
+    if not user:
+        return 'Error, there is not any user whose created for test! Look back createNewUser function.'
+
+
+    OwnerName = 'TemelReis'
+    AreaName = 'test_case'
+    City = 'test_case'
+    adress = 'test_case'
+    OwnerNumber = 'test_case'
+    owner_name = 'test_case'   
+    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress,LikeCoun=0)
+    #newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = user,LikeCoun=0)
+    #newClock = Clocks(c10 = 0,owner_area = newArea, c11 = 0,c12 = 0,c13 = 0,c14 = 0,c15 = 0,c16 = 0,c17 = 0,c18 = 0,c19 = 0,c20 = 0,c21 = 0, c22 = 0,c23 = 0,c24 = 0)
+    
+    db.session.add(newArea)
+    #db.session.add(newClock)
+    db.session.commit()    
+    area = FootballArea.query.filter_by(adress = 'test_case').first()
+
+    if area:                #If added there must be a user who has user_type -1
+        return 'Area added succesfully!'
+
+    return 'Area didnt add, Error!'
+
+#One-to-Many Relationships unit test 
+def User_Area_relation():
+
+    user = Users.query.filter_by(user_type = -1).first()
+    if not user:                #If didnt user add so didnt delete
+        return 'Error, there is no user for delete! Look back to createNewUser function'
+
+    area = FootballArea.query.filter_by(adress = 'test_case').first()
+
+    if not area:                #If added there must be a user who has user_type -1
+        return 'Error, There is no area which is created by createArea function! Look for createArea function.'
+
+    area.users = user
+
+    print('area.users.name')
+    return 0
+
+def deleteArea():
+    area = FootballArea.query.filter_by(adress = 'test_case').first()
+
+    if not area:                #If added there must be a user who has user_type -1
+        return 'Error, There is no area which is created by createArea function! Look for createArea function.'
+
+    db.session.delete(area)
+    db.session.commit()
+    area = FootballArea.query.filter_by(adress = 'test_case').first()
+
+    if not area:          
+        return 'Area deleted succesfully!'
+
+    return 'Error, Area didnt deleted!'
+
+def deleteAUser():
+    user = Users.query.filter_by(user_type = -1).first()
+    if not user:                #If didnt user add so didnt delete
+        return 'Error, there is no user for delete! Look back to createNewUser function'
+    db.session.delete(user)
+    db.session.commit()
+
+    user = Users.query.filter_by(user_type = -1).first()
+    
+    if not user:
+        return 'User deleted succesfully!'
+    return 'Error, User didnt deleted!'
