@@ -1,10 +1,14 @@
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,url_for,flash
+from flask import Flask,render_template,request,redirect,url_for,flash,Response
 from flask_sqlalchemy import SQLAlchemy
-#from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
+
+from werkzeug.utils import secure_filename
+import base64   #to convert string (blob database) to picture
+
+
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
@@ -20,6 +24,7 @@ def getUser():
     global currentUser
     return currentUser
 
+
 def createNewUser():
     newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
     db.session.add(newOwner)
@@ -32,6 +37,45 @@ def deleteAUser():
     db.session.commit()
     print("user.name = ", user.name)
     return 'User deleted succesfully!'
+
+
+@app.route('/<int:id>')
+def get_img(id):
+    image = Img.query.filter_by(users_id = currentUser).first()
+    if not image:
+        return 'no image', 400
+
+    return Response(image.img , mimetype = image.mimetype)
+
+@app.route('/upload_pp', methods = ['POST'])
+def upload():
+    pic = request.files['pic']
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    image = Img.query.filter_by(users_id = currentUser).first()
+
+    if not image:
+        image = Img(img = img, mimetype = mimetype, name = filename, users = user)
+        db.session.add(image)
+        db.session.commit()
+        return 'Img has been uploaded', 200
+
+    if image:
+        image.img = img
+        image.mimetype = mimetype
+        image.name = filename
+        db.session.commit()
+        return ' You have changed already a pp!!', 200
 
 @app.route("/")
 @app.route("/homepage")
@@ -56,6 +100,7 @@ def appointment():
         return render_template("signin.html", currentUser = currentUser)
     areas = FootballArea.query.all()
     return render_template("appointment.html",areas=areas,selection_city = "")
+
 @app.route("/appointment",methods = ["POST"])
 def searchCity():
     global currentUser
@@ -64,6 +109,7 @@ def searchCity():
     selection_city = (request.form.get("selection"))
     areas = FootballArea.query.all()
     return render_template("appointment.html",areas=areas,selection_city = selection_city)
+
 @app.route("/myprofil")
 def myprofil():
     global currentUser
@@ -72,8 +118,13 @@ def myprofil():
 
     user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
+    pp = Img.query.filter_by(users_id =currentUser).first()
     
-    return render_template("myprofil.html", user = user,areas=areas)
+    if pp:
+        image = base64.b64encode(pp.img).decode('ascii')
+    if not pp:
+        image = -1 #-1 is a magic number to represent not found image
+    return render_template("myprofil.html", user = user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -105,6 +156,7 @@ def aboutus():
 @app.route("/signin")
 def signin():
     return render_template("signin.html")
+
 @app.route("/editMyProfil")
 def editMyProfil():
     global currentUser
@@ -135,12 +187,13 @@ def addArea():
     db.session.add(newArea)
     db.session.add(newClock)
     db.session.commit()
-
     return redirect(url_for("myprofil"))
+
 @app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
+
 @app.route("/app_comm/<string:id>",methods = ["POST"])
 def app_comm(id):
     if request.method == 'POST':
@@ -151,6 +204,7 @@ def app_comm(id):
         db.session.add(newComment)
         db.session.commit()
         return redirect(url_for("appointment"))
+
 @app.route("/editFootballArea")
 def editFootballArea():
     global currentUser
@@ -179,9 +233,8 @@ def editArea():
 def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
     comments = comment.query.all()
-    
-
     return render_template("book_Appointment.html",area=area,comments=comments)
+
 @app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
@@ -370,7 +423,16 @@ class Users(db.Model):
     user_type = db.Column(db.Integer)
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
+    image_profile = db.relationship('Img', backref = 'users')
     #image_file = db.Column(db.String(40), default = 'profil_photo.png')
+
+class Img(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    img = db.Column(db.Text, nullable = False)
+    name = db.Column(db.Text, nullable = False)
+    mimetype = db.Column(db.Text, nullable = False)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), default = -1)
+    owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'), default = -1)
 
 class comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
