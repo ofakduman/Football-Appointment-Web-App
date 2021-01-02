@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import base64   #to convert string (blob database) to picture
 
 
+
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
@@ -23,49 +24,6 @@ def setCurrentUser(id):
 def getUser():
     global currentUser
     return currentUser
-
-
-
-
-
-@app.route('/<int:id>')
-def get_img(id):
-    image = Img.query.filter_by(users_id = currentUser).first()
-    if not image:
-        return 'no image', 400
-
-    return Response(image.img , mimetype = image.mimetype)
-
-@app.route('/upload_pp', methods = ['POST'])
-def upload():
-    pic = request.files['pic']
-
-    if not pic:
-        return 'no pic uploaded' , 400
-
-    user = Users.query.filter_by(id = currentUser).first()
-    if not user:
-        return 'no user' , 400
-
-    filename = secure_filename(pic.filename)
-    mimetype = pic.mimetype
-    img = pic.read()
-
-    image = Img.query.filter_by(users_id = currentUser).first()
-
-    if not image:
-        image = Img(img = img, mimetype = mimetype, name = filename, users = user)
-        db.session.add(image)
-        db.session.commit()
-        return 'Img has been uploaded', 200
-
-    if image:
-        image.img = img
-        image.mimetype = mimetype
-        image.name = filename
-        db.session.commit()
-        #flash("Photo Uploaded" , "200")
-        return redirect(url_for("myprofil"))
 
 @app.route("/")
 @app.route("/homepage")
@@ -130,7 +88,7 @@ def myAppointments():
     if pp:
         image = base64.b64encode(pp.img).decode('ascii')
     if not pp:
-        image = -1 #-1 is a magic number to represent not found image
+        image = -1 
     
     return render_template("myAppointments.html", user = user,areas=areas, image = image)
 
@@ -251,6 +209,7 @@ def addComment(id):
     db.session.commit()
     comments = comment.query.all()
     return render_template("book_Appointment.html",area=area,comments=comments)
+
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
     global currentUser
@@ -265,6 +224,7 @@ def incrementlike(curent_id):
         return redirect(url_for("appointment"))
     else :
         return redirect(url_for("appointment"))
+
 @app.route("/decrementlike/<int:curent_id>")
 def decrementlike(curent_id):
     global currentUser
@@ -410,6 +370,46 @@ def signin_user():
     else:
         return render_template("signin.html")
 
+@app.route('/<int:id>')
+def get_img(id):
+    image = Img.query.filter_by(users_id = currentUser).first()
+    if not image:
+        return 'no image', 400
+
+    return Response(image.img , mimetype = image.mimetype)
+
+@app.route('/upload_pp', methods = ['POST'])
+def upload():
+    pic = request.files['pic']
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    image = Img.query.filter_by(users_id = currentUser).first()
+
+    if not image:
+        image = Img(img = img, mimetype = mimetype, name = filename, users = user)
+        db.session.add(image)
+        db.session.commit()
+        #return 'Img has been uploaded', 200
+        return redirect(url_for("myprofil"))
+
+    if image:
+        image.img = img
+        image.mimetype = mimetype
+        image.name = filename
+        db.session.commit()
+        #flash("Photo Uploaded" , "200")
+        return redirect(url_for("myprofil"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -425,11 +425,11 @@ class Users(db.Model):
 
 class Img(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    img = db.Column(db.Text, nullable = False)
+    img = db.Column(db.Text, default = "none")
     name = db.Column(db.Text, nullable = False)
     mimetype = db.Column(db.Text, nullable = False)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'), default = -1)
-    owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'), default = -1)
+   # owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'), default = -1)
 
 class comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -476,102 +476,3 @@ if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
 
-
-
-    ######################################  Test Functions  #################################
-
-'''def createNewUser():
-    newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
-    db.session.add(newOwner)
-    db.session.commit()
-    return 'User added succesfully!'
-
-def deleteAUser():
-    user = Users.query.filter_by(user_type = 8).first()
-    db.session.delete(user)
-    db.session.commit()
-    print("user.name = ", user.name)
-    return 'User deleted succesfully!'
-'''
-
-def createNewUser():
-    newOwner = Users(name = 'TemelReis',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = -1)
-    db.session.add(newOwner)
-    db.session.commit()
-    user = Users.query.filter_by(user_type = -1).first()
-
-    if user:                #If added there must be a user who has user_type -1
-        return 'User added succesfully!'
-
-    return 'User didnt add, Error!'
-
-def createArea():
-    user = Users.query.filter_by(user_type = -1).first()
-    if not user:
-        return 'Error, there is not any user whose created for test! Look back createNewUser function.'
-
-
-    OwnerName = 'TemelReis'
-    AreaName = 'test_case'
-    City = 'test_case'
-    adress = 'test_case'
-    OwnerNumber = 'test_case'
-    owner_name = 'test_case'   
-    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress,LikeCoun=0)
-    #newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = user,LikeCoun=0)
-    #newClock = Clocks(c10 = 0,owner_area = newArea, c11 = 0,c12 = 0,c13 = 0,c14 = 0,c15 = 0,c16 = 0,c17 = 0,c18 = 0,c19 = 0,c20 = 0,c21 = 0, c22 = 0,c23 = 0,c24 = 0)
-    
-    db.session.add(newArea)
-    #db.session.add(newClock)
-    db.session.commit()    
-    area = FootballArea.query.filter_by(adress = 'test_case').first()
-
-    if area:                #If added there must be a user who has user_type -1
-        return 'Area added succesfully!'
-
-    return 'Area didnt add, Error!'
-
-#One-to-Many Relationships unit test 
-def User_Area_relation():
-
-    user = Users.query.filter_by(user_type = -1).first()
-    if not user:                #If didnt user add so didnt delete
-        return 'Error, there is no user for delete! Look back to createNewUser function'
-
-    area = FootballArea.query.filter_by(adress = 'test_case').first()
-
-    if not area:                #If added there must be a user who has user_type -1
-        return 'Error, There is no area which is created by createArea function! Look for createArea function.'
-
-    area.users = user
-
-    print('area.users.name')
-    return 0
-
-def deleteArea():
-    area = FootballArea.query.filter_by(adress = 'test_case').first()
-
-    if not area:                #If added there must be a user who has user_type -1
-        return 'Error, There is no area which is created by createArea function! Look for createArea function.'
-
-    db.session.delete(area)
-    db.session.commit()
-    area = FootballArea.query.filter_by(adress = 'test_case').first()
-
-    if not area:          
-        return 'Area deleted succesfully!'
-
-    return 'Error, Area didnt deleted!'
-
-def deleteAUser():
-    user = Users.query.filter_by(user_type = -1).first()
-    if not user:                #If didnt user add so didnt delete
-        return 'Error, there is no user for delete! Look back to createNewUser function'
-    db.session.delete(user)
-    db.session.commit()
-
-    user = Users.query.filter_by(user_type = -1).first()
-    
-    if not user:
-        return 'User deleted succesfully!'
-    return 'Error, User didnt deleted!'
