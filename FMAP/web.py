@@ -83,10 +83,10 @@ def myAppointments():
 
     user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
-    pp = Img.query.filter_by(users_id =currentUser).first()
+    pp = Img.query.filter_by(users_id = currentUser).first()
     
     if pp:
-        image = base64.b64encode(pp.img).decode('ascii')
+        image = pp.img
     if not pp:
         image = -1 
     
