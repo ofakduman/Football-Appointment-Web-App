@@ -1,15 +1,20 @@
 from datetime import datetime
-from flask import Flask,render_template,request,redirect,url_for,flash
+from flask import Flask,render_template,request,redirect,url_for,flash,Response
 from flask_sqlalchemy import SQLAlchemy
-#from flask_wtf.file import FileField, FileAllowed #to restrict upload file types -> to only upload png and jpeg files for pp
+
+from werkzeug.utils import secure_filename
+import base64   #to convert string (blob database) to picture
+
+
+
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
 currentEnablef = True
-currentUser = 0         #global variable
+currentUser = 0         
 user_DataBase_size = 25
 
 def setCurrentUser(id):
@@ -19,19 +24,6 @@ def setCurrentUser(id):
 def getUser():
     global currentUser
     return currentUser
-
-def createNewUser():
-    newOwner = Users(name = 'owner1',surname = 'owner1' ,username='owner1',email = 'owner1',password = 'owner1',user_type = 8)
-    db.session.add(newOwner)
-    db.session.commit()
-    return 'User added succesfully!'
-
-def deleteAUser():
-    user = Users.query.filter_by(user_type = 8).first()
-    db.session.delete(user)
-    db.session.commit()
-    print("user.name = ", user.name)
-    return 'User deleted succesfully!'
 
 @app.route("/")
 @app.route("/homepage")
@@ -56,6 +48,7 @@ def appointment():
         return render_template("signin.html", currentUser = currentUser)
     areas = FootballArea.query.all()
     return render_template("appointment.html",areas=areas,selection_city = "")
+
 @app.route("/appointment",methods = ["POST"])
 def searchCity():
     global currentUser
@@ -64,6 +57,7 @@ def searchCity():
     selection_city = (request.form.get("selection"))
     areas = FootballArea.query.all()
     return render_template("appointment.html",areas=areas,selection_city = selection_city)
+
 @app.route("/myprofil")
 def myprofil():
     global currentUser
@@ -72,8 +66,14 @@ def myprofil():
 
     user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
+    pp = Img.query.filter_by(users_id =currentUser).first()
     
-    return render_template("myprofil.html", user = user,areas=areas)
+    if pp:
+        image = pp.img
+    if not pp:
+        image = -1 #-1 is a magic number to represent not found image
+
+    return render_template("myprofil.html", user = user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -83,8 +83,14 @@ def myAppointments():
 
     user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
+    pp = Img.query.filter_by(users_id = currentUser).first()
     
-    return render_template("myAppointments.html", user = user,areas=areas)
+    if pp:
+        image = pp.img
+    if not pp:
+        image = -1 
+    
+    return render_template("myAppointments.html", user = user,areas=areas, image = image)
 
     
 @app.route("/payment")
@@ -105,6 +111,7 @@ def aboutus():
 @app.route("/signin")
 def signin():
     return render_template("signin.html")
+
 @app.route("/editMyProfil")
 def editMyProfil():
     global currentUser
@@ -135,12 +142,13 @@ def addArea():
     db.session.add(newArea)
     db.session.add(newClock)
     db.session.commit()
-
     return redirect(url_for("myprofil"))
+
 @app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
+
 @app.route("/app_comm/<string:id>",methods = ["POST"])
 def app_comm(id):
     if request.method == 'POST':
@@ -151,6 +159,7 @@ def app_comm(id):
         db.session.add(newComment)
         db.session.commit()
         return redirect(url_for("appointment"))
+
 @app.route("/editFootballArea")
 def editFootballArea():
     global currentUser
@@ -172,35 +181,46 @@ def editArea():
     area.adress = request.form.get("adress")
     area.OwnerNumber = request.form.get("owner_number")
     user.phoneNumber = area.OwnerNumber
+    area.img1 
+
     db.session.commit()
+
+
     return redirect(url_for("myprofil"))
 
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
     comments = comment.query.all()
-    
+    users = Users.query.all()
+    return render_template("book_Appointment.html",area=area, comments=comments, users = users)
 
-    return render_template("book_Appointment.html",area=area,comments=comments)
 @app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
-    User = Users.query.filter_by(id = currentUser).first()
+    user = Users.query.filter_by(id = currentUser).first()
     area = FootballArea.query.filter_by(id = id).first()
     com = request.form.get("Comment")
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return redirect(url_for("appointment"))
+
     owner_Com = area.id
-    owner_User = User.name
+    owner_Id = user.id
+    owner_User = user.name
     owner_Y = an.year
     owner_M = an.month
     owner_D = an.day
     owner_H = an.hour
     owner_Mi = an.minute
-    newComment = comment(Com = com,owner_Com=owner_Com,owner_User=owner_User,Year=owner_Y,Month=owner_M,Day=owner_D,Hour=owner_H,Minute=owner_Mi)
+    newComment = comment(Com = com,owner_Com=owner_Com,owner_Id = owner_Id,owner_User=owner_User,Year=owner_Y,Month=owner_M,Day=owner_D,Hour=owner_H,Minute=owner_Mi)
     db.session.add(newComment)
     db.session.commit()
     comments = comment.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments)
+    users = Users.query.all()
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
+
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
     global currentUser
@@ -215,6 +235,7 @@ def incrementlike(curent_id):
         return redirect(url_for("appointment"))
     else :
         return redirect(url_for("appointment"))
+
 @app.route("/decrementlike/<int:curent_id>")
 def decrementlike(curent_id):
     global currentUser
@@ -360,6 +381,122 @@ def signin_user():
     else:
         return render_template("signin.html")
 
+@app.route('/<int:id>')
+def get_img(id):
+    image = Img.query.filter_by(users_id = currentUser).first()
+    if not image:
+        return 'no image', 400
+
+    return Response(image.img , mimetype = image.mimetype)
+
+@app.route('/upload_pp', methods = ['POST'])
+def upload():
+    pic = request.files['pic']
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
+    user.pp = img
+
+    image = Img.query.filter_by(users_id = currentUser).first()
+
+    if not image:
+        image = Img(img = img, mimetype = mimetype, name = filename, users = user)
+        db.session.add(image)
+        db.session.commit()
+        #return 'Img has been uploaded', 200
+        return redirect(url_for("myprofil"))
+
+    if image:
+        image.img = img
+        image.mimetype = mimetype
+        image.name = filename
+        db.session.commit()
+        #flash("Photo Uploaded" , "200")
+        return redirect(url_for("myprofil"))
+
+@app.route('/upload_ap', methods = ['POST'])
+def upload_ap():
+
+    pic = request.files['pic']
+    area = FootballArea.query.filter_by(users_id = currentUser).first()
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    
+    if not area:
+        return 'no area found' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
+
+    #if area.img1 == "none":
+    area.img1 = img
+
+
+    db.session.commit()
+
+    return redirect(url_for("editFootballArea"))
+
+@app.route('/upload_ap_add', methods = ['POST'])
+def upload_ap_add():
+
+    pic = request.files['pic']
+    area = FootballArea.query.filter_by(users_id = currentUser).first()
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    if not area:
+        return 'no area found' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
+
+    if area.img1 == "none":
+        area.img1 = img
+
+
+    elif area.img2 == "none":
+        area.img2 = img
+    
+    elif area.img3 == "none":
+        area.img3 = img
+            
+    elif area.img4 == "none":
+        area.img4 = img
+
+    db.session.commit()
+
+    return redirect(url_for("editFootballArea"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -370,10 +507,21 @@ class Users(db.Model):
     user_type = db.Column(db.Integer)
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
+    image_profile = db.relationship('Img', backref = 'users')
+    pp = db.Column(db.Text, default = "none")
     #image_file = db.Column(db.String(40), default = 'profil_photo.png')
+
+class Img(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    img = db.Column(db.Text, default = "none")
+    name = db.Column(db.Text, nullable = False)
+    mimetype = db.Column(db.Text, nullable = False)
+    users_id = db.Column(db.Integer, db.ForeignKey('users.id'), default = -1)
+   # owner_area_id = db.Column(db.Integer,db.ForeignKey('football_area.id'), default = -1)
 
 class comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
+    owner_Id = db.Column(db.Integer, default = -1)
     owner_User = db.Column(db.String(80))
     owner_Com = db.Column(db.Integer)
     Com  =  db.Column(db.String(80))
@@ -393,7 +541,11 @@ class FootballArea(db.Model):
     adress = db.Column(db.Text)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     clocks = db.relationship('Clocks',backref = 'owner_area')
-    
+    img1 = db.Column(db.Text, default = "none")
+    img2 = db.Column(db.Text, default = "none")
+    img3 = db.Column(db.Text, default = "none")
+    img4 = db.Column(db.Text, default = "none")
+
 
 class Clocks(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -416,3 +568,4 @@ class Clocks(db.Model):
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
+

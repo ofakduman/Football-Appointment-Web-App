@@ -79,7 +79,12 @@ FMA</div>
             {% for area in areas  %}
                 <tr>
                 <th scope="row">{{area.id}}</th>
-                <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
+                {% if area.img1 != "none"  %}
+                  <td><img src="data:;base64,{{ area.img1 }}" alt="" height="100" width="100"/></td>                   
+                {% endif %}
+                {% if area.img1 == "none"  %}
+                  <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
+                {% endif %}
                 
                 <td>{{area.OwnerName}}</td>
                 <td>{{area.OwnerNumber}}</td>
@@ -102,8 +107,12 @@ FMA</div>
                 {% if area.City == selection_city %}
                 <tr>
                   <th scope="row">{{area.id}}</th>
+                {% if area.img1 != "none"  %}
+                  <td><img src="data:;base64,{{ area.img1 }}" alt="" height="100" width="100"/></td>                   
+                {% endif %}
+                {% if area.img1 == "none"  %}
                   <td><img src="/static/images/halısaha2.jpg" alt="" height="100" width="100" /> </td>
-                  
+                {% endif %}                  
                   <td>{{area.OwnerName}}</td>
                   <td>{{area.OwnerNumber}}</td>
                   <td>{{area.AreaName}}</td>

@@ -16,10 +16,7 @@ FMA</div>
 <li><a href="/homepage">HOME</a></li>
 
 <li>
-      
       <a href="/appointment">APPOINTMENT</a>
-      
-      
 </li>
 <li><a href="/aboutus">ABOUT US</a></li>
 <li><a href="/contactus">CONTACT US</a></li>
@@ -64,10 +61,13 @@ FMA</div>
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
                     <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.name}}</h4>
                     <div class="mt-2">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fa fa-fw fa-camera"></i>
-                        <span>Change Photo</span>
-                      </button>
+                       <form action="http://localhost:5000/upload_pp" enctype="multipart/form-data" method="POST">
+                                    <input type="file" name="pic"/>
+                                    <button class="btn btn-primary" input type="submit" name="upload a file"/>
+                                      <i class="fa fa-fw fa-camera"></i>
+                                      <span>Change Photo</span>
+                                    </button>
+                                </form>
                     </div>
                   </div>
                   <div class="text-center text-sm-right">
