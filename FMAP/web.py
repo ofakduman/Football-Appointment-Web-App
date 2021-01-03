@@ -69,7 +69,7 @@ def myprofil():
     pp = Img.query.filter_by(users_id =currentUser).first()
     
     if pp:
-        image = base64.b64encode(pp.img).decode('ascii')
+        image = pp.img
     if not pp:
         image = -1 #-1 is a magic number to represent not found image
 
@@ -392,6 +392,9 @@ def upload():
     filename = secure_filename(pic.filename)
     mimetype = pic.mimetype
     img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
 
     image = Img.query.filter_by(users_id = currentUser).first()
 
