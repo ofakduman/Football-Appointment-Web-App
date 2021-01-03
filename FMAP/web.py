@@ -181,34 +181,45 @@ def editArea():
     area.adress = request.form.get("adress")
     area.OwnerNumber = request.form.get("owner_number")
     user.phoneNumber = area.OwnerNumber
+    area.img1 
+
     db.session.commit()
+
+
     return redirect(url_for("myprofil"))
 
 @app.route("/bookAppointment/<string:id>")
 def bookAppointment(id):
     area = FootballArea.query.filter_by(id = id).first()
     comments = comment.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments)
+    users = Users.query.all()
+    return render_template("book_Appointment.html",area=area, comments=comments, users = users)
 
 @app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
-    User = Users.query.filter_by(id = currentUser).first()
+    user = Users.query.filter_by(id = currentUser).first()
     area = FootballArea.query.filter_by(id = id).first()
     com = request.form.get("Comment")
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return redirect(url_for("appointment"))
+
     owner_Com = area.id
-    owner_User = User.name
+    owner_Id = user.id
+    owner_User = user.name
     owner_Y = an.year
     owner_M = an.month
     owner_D = an.day
     owner_H = an.hour
     owner_Mi = an.minute
-    newComment = comment(Com = com,owner_Com=owner_Com,owner_User=owner_User,Year=owner_Y,Month=owner_M,Day=owner_D,Hour=owner_H,Minute=owner_Mi)
+    newComment = comment(Com = com,owner_Com=owner_Com,owner_Id = owner_Id,owner_User=owner_User,Year=owner_Y,Month=owner_M,Day=owner_D,Hour=owner_H,Minute=owner_Mi)
     db.session.add(newComment)
     db.session.commit()
     comments = comment.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments)
+    users = Users.query.all()
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
@@ -395,6 +406,7 @@ def upload():
 
     img = base64.b64encode(img).decode('ascii')
     #img = img.decode('utf-8')
+    user.pp = img
 
     image = Img.query.filter_by(users_id = currentUser).first()
 
@@ -413,6 +425,78 @@ def upload():
         #flash("Photo Uploaded" , "200")
         return redirect(url_for("myprofil"))
 
+@app.route('/upload_ap', methods = ['POST'])
+def upload_ap():
+
+    pic = request.files['pic']
+    area = FootballArea.query.filter_by(users_id = currentUser).first()
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    
+    if not area:
+        return 'no area found' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
+
+    #if area.img1 == "none":
+    area.img1 = img
+
+
+    db.session.commit()
+
+    return redirect(url_for("editFootballArea"))
+
+@app.route('/upload_ap_add', methods = ['POST'])
+def upload_ap_add():
+
+    pic = request.files['pic']
+    area = FootballArea.query.filter_by(users_id = currentUser).first()
+
+    if not pic:
+        return 'no pic uploaded' , 400
+
+    if not area:
+        return 'no area found' , 400
+
+    user = Users.query.filter_by(id = currentUser).first()
+    if not user:
+        return 'no user' , 400
+
+    filename = secure_filename(pic.filename)
+    mimetype = pic.mimetype
+    img = pic.read()
+
+    img = base64.b64encode(img).decode('ascii')
+    #img = img.decode('utf-8')
+
+    if area.img1 == "none":
+        area.img1 = img
+
+
+    elif area.img2 == "none":
+        area.img2 = img
+    
+    elif area.img3 == "none":
+        area.img3 = img
+            
+    elif area.img4 == "none":
+        area.img4 = img
+
+    db.session.commit()
+
+    return redirect(url_for("editFootballArea"))
+
 class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
@@ -424,6 +508,7 @@ class Users(db.Model):
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
     image_profile = db.relationship('Img', backref = 'users')
+    pp = db.Column(db.Text, default = "none")
     #image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
 class Img(db.Model):
@@ -436,6 +521,7 @@ class Img(db.Model):
 
 class comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
+    owner_Id = db.Column(db.Integer, default = -1)
     owner_User = db.Column(db.String(80))
     owner_Com = db.Column(db.Integer)
     Com  =  db.Column(db.String(80))
@@ -455,7 +541,11 @@ class FootballArea(db.Model):
     adress = db.Column(db.Text)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     clocks = db.relationship('Clocks',backref = 'owner_area')
-    
+    img1 = db.Column(db.Text, default = "none")
+    img2 = db.Column(db.Text, default = "none")
+    img3 = db.Column(db.Text, default = "none")
+    img4 = db.Column(db.Text, default = "none")
+
 
 class Clocks(db.Model):
     id = db.Column(db.Integer,primary_key = True)

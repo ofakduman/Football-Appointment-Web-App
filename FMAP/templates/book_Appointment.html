@@ -44,10 +44,31 @@
   </li>
   </ul>
   </nav>
-    <img src="/static/images/halısaha1.jpg" alt="" height="200" width="350"/> 
-    <img src="/static/images/halısaha2.jpg" alt="" height="200" width="350"/>
-    <img src="/static/images/halısaha4.jpg" alt="" height="200" width="350"/>
-    <img src="/static/images/halısaha5.jpg" alt="" height="200" width="350"/>
+          {% if area.img1 != "none"  %}
+              <img src="data:;base64,{{ area.img1 }}" alt="" height="200" width="350"/>                   
+          {% endif %}
+           {% if area.img2 != "none"  %}
+              <img src="data:;base64,{{ area.img2 }}" alt="" height="200" width="350"/>                   
+          {% endif %}
+           {% if area.img3 != "none"  %}
+              <img src="data:;base64,{{ area.img3 }}" alt="" height="200" width="350"/>                   
+          {% endif %}
+           {% if area.img4 != "none"  %}
+              <img src="data:;base64,{{ area.img4 }}" alt="" height="200" width="350"/>                   
+          {% endif %}
+          {% if area.img1 == "none"  %}
+              <img src="/static/images/halısaha1.jpg" alt="" height="200" width="350"/> 
+          {% endif %}
+           {% if area.img2 == "none"  %}
+              <img src="/static/images/halısaha2.jpg" alt="" height="200" width="350"/>
+          {% endif %}
+           {% if area.img3 == "none"  %}
+              <img src="/static/images/halısaha4.jpg" alt="" height="200" width="350"/>
+          {% endif %}
+           {% if area.img4 == "none"  %}
+              <img src="/static/images/halısaha5.jpg" alt="" height="200" width="350"/>
+          {% endif %}
+
     <div style=" color: white; margin-top: 70px;" class="container">
         <table class="table table-bordered">
             <thead>
@@ -184,13 +205,24 @@
   <div class="row">
   <div class="col-sm-1">
   <div class="thumbnail">
-  <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+  {% for user in users %}
+    {% if comment.owner_Id == user.id %}
+      {% if user.pp != "none"  %}
+        <img src="data:;base64,{{ user.pp }}" alt="" height="200" width="350"/>                   
+      {% endif %}
+      {% if user.pp == "none"  %}
+       <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+      {% endif %}
+    {% endif %}  
+  {% endfor %} 
+
   </div><!-- /thumbnail -->
   </div><!-- /col-sm-1 -->
   
   <div class="col-sm-5">
   <div class="panel panel-default">
   <div class="panel-heading">
+
   <strong>{{comment.owner_User}}</strong> <span class="text-muted">commented on {{comment.Day}}/{{comment.Month}}/{{comment.Year}} at {{comment.Hour}}:{{comment.Minute}}</span>
   </div>
   <div class="panel-body">
