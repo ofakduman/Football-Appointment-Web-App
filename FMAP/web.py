@@ -9,7 +9,7 @@ import base64   #to convert string (blob database) to picture
 
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/OmerF/OneDrive/Masaüstü/Proje/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/90538/Desktop/Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
