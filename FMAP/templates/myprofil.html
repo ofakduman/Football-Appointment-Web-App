@@ -70,7 +70,11 @@
                         <div class="profile-head">
                                     <h1>{{user.name}}</h1>
                                     <h6>
+                                       {% if user.user_type == 0%}
+                                        User  
+                                       {% else %}
                                         Owner
+                                       {% endif %}
                                     </h6>
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
