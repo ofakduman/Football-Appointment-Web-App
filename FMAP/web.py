@@ -144,7 +144,7 @@ def addArea():
     db.session.commit()
     return redirect(url_for("myprofil"))
 
-@app.route("/appointment_comment/<string:id>")
+"""@app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
@@ -158,7 +158,7 @@ def app_comm(id):
         print(newCommentCom)
         db.session.add(newComment)
         db.session.commit()
-        return redirect(url_for("appointment"))
+        return redirect(url_for("appointment"))"""
 
 @app.route("/editFootballArea")
 def editFootballArea():
@@ -195,7 +195,7 @@ def bookAppointment(id):
     users = Users.query.all()
     return render_template("book_Appointment.html",area=area, comments=comments, users = users)
 
-@app.route("/addComment/<string:id>",methods=['GET','POST'])    
+"""@app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
@@ -219,7 +219,7 @@ def addComment(id):
     db.session.commit()
     comments = comment.query.all()
     users = Users.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)"""
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
@@ -318,11 +318,11 @@ def signup_user():
     email = request.form.get("email")
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
-    newComment=comment(Com="Bos",owner_Com="1",owner_User="None",Year=1,Month=1,Day=1,Hour=1,Minute=2)
+    #newComment=comment(Com="Bos",owner_Com="1",owner_User="None",Year=1,Month=1,Day=1,Hour=1,Minute=2)
     if Check_User(username) == False :
         return redirect(url_for("signup"))
     db.session.add(newUser)
-    db.session.add(newComment)
+    #db.session.add(newComment)
     db.session.commit()
     return redirect(url_for("signin"))
 
