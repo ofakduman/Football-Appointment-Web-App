@@ -199,7 +199,7 @@
     </div>
     
   
-  <!--{% for comment in comments  %}
+  <{% for comment in comments  %}
   {% if area.id == comment.owner_Com %}
 <div class="container">
   <div class="row">
@@ -214,11 +214,11 @@
        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
       {% endif %}
     {% endif %}  
-  {% endfor %} -->
+  {% endfor %} 
 
-  </div><!-- /thumbnail -->
-  </div><!-- /col-sm-1 -->
-  <!--
+  </div>< /thumbnail 
+  </div> /col-sm-1 
+  
   <div class="col-sm-5">
   <div class="panel panel-default">
   <div class="panel-heading">
@@ -227,16 +227,15 @@
   </div>
   <div class="panel-body">
   {{comment.Com}}
-  </div><!-- /panel-body -->
-  </div><!-- /panel panel-default -->
-  </div><!-- /col-sm-5 -->
-  <!--
+  </div> /panel-body 
+    </div>/panel panel-default 
+  </div> /col-sm-5 
+  
   {% endif %}  
     {% endfor %}  
     <form id="owner" class="input-group" action="/addComment/{{area.id}}" method="POST">
       <input style="position: absolute; left: 15%;"s type="text" name="Comment" class="input-field" placeholder="Comment" required> 
-      <button style="position: absolute; left: 30%;" type="submit" class="btn btn-primary">Comment</button> -->
-  
+      <button style="position: absolute; left: 30%;" type="submit" class="btn btn-primary">Comment</button>   
   </form>  
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
