@@ -9,7 +9,7 @@ import base64   #to convert string (blob database) to picture
 
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/90538/Desktop/Project/FMAP/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Project/FMAP/database.db'
 db=SQLAlchemy(app)
 
 currentEnablet = True
@@ -289,6 +289,45 @@ def fillcurrentclock(id,clock):
         
     db.session.commit()
     return redirect(url_for("payment"))
+@app.route("/cancelAppointment/<string:id>/<int:clock>")
+def cancelAppointment(id,clock):
+    global currentUser
+    user = Users.query.filter_by(id = currentUser).first()
+    area = FootballArea.query.filter_by(id = id).first()
+    if clock == 0:
+        area.clocks[0].c10 = 0
+    if clock == 1:
+        area.clocks[0].c11 = 0
+    if clock == 2:
+        area.clocks[0].c12 = 0
+    if clock == 3:
+        area.clocks[0].c13 = 0
+    if clock == 4:
+        area.clocks[0].c14 = 0
+    if clock == 5:
+        area.clocks[0].c15 = 0
+    if clock == 6:
+        area.clocks[0].c16 = 0
+    if clock == 7:
+        area.clocks[0].c17 = 0
+    if clock == 8:
+        area.clocks[0].c18 = 0
+    if clock == 9:
+        area.clocks[0].c19 = 0
+    if clock == 10:
+        area.clocks[0].c20 = 0
+    if clock == 11:
+        area.clocks[0].c21 = 0
+    if clock == 12:
+        area.clocks[0].c22 = 0
+    if clock == 13:
+        area.clocks[0].c23 = 0
+    if clock == 14:
+        area.clocks[0].c24 = 0
+        
+    db.session.commit()
+    return redirect(url_for("myAppointments"))
+
 
 
 @app.route("/signup")
