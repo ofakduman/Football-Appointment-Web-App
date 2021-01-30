@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Flask,render_template,request,redirect,url_for,flash,Response
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 import base64   #to convert string (blob database) to picture
 
@@ -9,13 +9,18 @@ import base64   #to convert string (blob database) to picture
 
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pfhfcvdsbaiijf:ffb41713a5a78f65ecd23b24086edec25a1ca22569a29e214639ab1e6b2e1d83@ec2-107-23-191-123.compute-1.amazonaws.com:5432/da6oja5nrlotcv'
-db=SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/Berk/Desktop/Yeni Deneme/Project/FMAP/database.db'
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 currentEnablet = True
 currentEnablef = True
 currentUser = 0         
 user_DataBase_size = 25
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(user_id)
 
 def setCurrentUser(id):
     global currentUser
@@ -73,7 +78,7 @@ def myprofil():
     if not pp:
         image = -1 #-1 is a magic number to represent not found image
 
-    return render_template("myprofil.html", user = user,areas=areas, image = image)
+    return render_template("myprofil.html", user = current_user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -414,6 +419,7 @@ def signin_user():
                 currentUser = user_check.id
         if user_check:
             if user_check.password == password:
+                login_user(user_check)
                 return redirect(url_for("myprofil")) #passing with userId to url for book appoinment
         flash("Invalid username or password !!!" , "error")
         return render_template("signin.html")
@@ -536,7 +542,7 @@ def upload_ap_add():
 
     return redirect(url_for("editFootballArea"))
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
     surname = db.Column(db.String(80))
