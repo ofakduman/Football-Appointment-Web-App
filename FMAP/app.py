@@ -1,34 +1,27 @@
 from datetime import datetime
 from flask import Flask,render_template,request,redirect,url_for,flash,Response
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 import base64   #to convert string (blob database) to picture
-from flask_login import login_user, current_user, logout_user, login_required,LoginManager
-from flask_login import LoginManager
-from flask.ext.login import UserMixin
+
+
 
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pfhfcvdsbaiijf:ffb41713a5a78f65ecd23b24086edec25a1ca22569a29e214639ab1e6b2e1d83@ec2-107-23-191-123.compute-1.amazonaws.com:5432/da6oja5nrlotcv'
-db=SQLAlchemy(app)
-
-
-
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'info'
-
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 currentEnablet = True
 currentEnablef = True
 currentUser = 0         
 user_DataBase_size = 25
-
 @login_manager.user_loader
 def load_user(user_id):
-    #return Users.query.get(int(user_id))
-    return Users.query.filter_by(id = currentUser).first()
+    return Users.query.get(user_id)
+
 def setCurrentUser(id):
     global currentUser
     currentUser = id
@@ -50,7 +43,6 @@ def signup():
 @app.route("/signout")
 def signout():
     global currentUser
-    logout_user()
     currentUser = 0
     return render_template("signin.html")
 
@@ -73,11 +65,13 @@ def searchCity():
 
 @app.route("/myprofil")
 def myprofil():
-    if current_user.is_authenticated==0:
-        print("AAA")
-        return redirect(url_for('signin'))
+    global currentUser
+    if currentUser == 0:
+        return redirect(url_for("signin"))
+
+    user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
-    pp = Img.query.filter_by(users_id =current_user.id).first()
+    pp = Img.query.filter_by(users_id =currentUser).first()
     
     if pp:
         image = pp.img
@@ -155,7 +149,7 @@ def addArea():
     db.session.commit()
     return redirect(url_for("myprofil"))
 
-"""@app.route("/appointment_comment/<string:id>")
+@app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
@@ -169,7 +163,7 @@ def app_comm(id):
         print(newCommentCom)
         db.session.add(newComment)
         db.session.commit()
-        return redirect(url_for("appointment"))"""
+        return redirect(url_for("appointment"))
 
 @app.route("/editFootballArea")
 def editFootballArea():
@@ -206,7 +200,7 @@ def bookAppointment(id):
     users = Users.query.all()
     return render_template("book_Appointment.html",area=area, comments=comments, users = users)
 
-"""@app.route("/addComment/<string:id>",methods=['GET','POST'])    
+@app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
@@ -230,7 +224,7 @@ def addComment(id):
     db.session.commit()
     comments = comment.query.all()
     users = Users.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments, users=users)"""
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
@@ -416,21 +410,12 @@ def signup_owner():
 @app.route("/signin_user", methods=["POST", "GET"])
 def signin_user():
     global currentUser
-    if current_user.is_authenticated:
-        print("BURDAAAA2")
-        username = request.form["nm"]
-        password = request.form["psw"]
-        user_check = Users.query.filter_by(username=username).first()
-        currentUser = user_check.id        
-        return redirect(url_for('myprofil'))
     if request.method == "POST":
         username = request.form["nm"]
         password = request.form["psw"]
         user_check = Users.query.filter_by(username=username).first()
-        print("BURDAAAA1")
         if user_check:
             if user_check.password == password:
-                print("BURDAAAA")
                 currentUser = user_check.id
         if user_check:
             if user_check.password == password:
@@ -557,7 +542,7 @@ def upload_ap_add():
 
     return redirect(url_for("editFootballArea"))
 
-class Users(db.Model ,UserMixin):
+class Users(UserMixin, db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
     surname = db.Column(db.String(80))
@@ -568,21 +553,7 @@ class Users(db.Model ,UserMixin):
     football_areas = db.relationship('FootballArea', backref = 'users')
     phoneNumber = db.Column(db.String(80), default = 'none')
     image_profile = db.relationship('Img', backref = 'users')
-    #pp = db.Column(db.Text, default = "none")
-    def is_active(self):
-        return True
-
-    def get_id(self):
-        return self.email
-
-    def is_authenticated(self):
-        return self.authenticated
-
-    def is_anonymous(self):
-        return False
-
- 
-
+    pp = db.Column(db.Text, default = "none")
     #image_file = db.Column(db.String(40), default = 'profil_photo.png')
 
 class Img(db.Model):
@@ -615,10 +586,10 @@ class FootballArea(db.Model):
     adress = db.Column(db.Text)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     clocks = db.relationship('Clocks',backref = 'owner_area')
-    #img1 = db.Column(db.Text, default = "none")
-    #img2 = db.Column(db.Text, default = "none")
-    #img3 = db.Column(db.Text, default = "none")
-    #img4 = db.Column(db.Text, default = "none")
+    img1 = db.Column(db.Text, default = "none")
+    img2 = db.Column(db.Text, default = "none")
+    img3 = db.Column(db.Text, default = "none")
+    img4 = db.Column(db.Text, default = "none")
 
 
 class Clocks(db.Model):
