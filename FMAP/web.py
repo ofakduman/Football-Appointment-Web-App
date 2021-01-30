@@ -66,7 +66,7 @@ def searchCity():
 @app.route("/myprofil")
 def myprofil():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
@@ -83,7 +83,7 @@ def myprofil():
 @app.route("/myprofil/appointments")
 def myAppointments():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
@@ -95,7 +95,7 @@ def myAppointments():
     if not pp:
         image = -1 
     
-    return render_template("myAppointments.html", user = user,areas=areas, image = image)
+    return render_template("myAppointments.html", user = current_user,areas=areas, image = image)
 
     
 @app.route("/payment")
@@ -124,7 +124,7 @@ def editMyProfil():
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
-    return render_template("editMyProfil.html",user = user)
+    return render_template("editMyProfil.html",user = current_user)
 
 @app.route("/addFootballArea")
 def addFootballArea():
