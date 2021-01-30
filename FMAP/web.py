@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pfhfcvdsbaiijf:ffb41713a5a78f65ecd23b24086edec25a1ca22569a29e214639ab1e6b2e1d83@ec2-107-23-191-123.compute-1.amazonaws.com:5432/da6oja5nrlotcv'
 db=SQLAlchemy(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -20,6 +21,7 @@ currentEnablet = True
 currentEnablef = True
 currentUser = 0         
 user_DataBase_size = 25
+
 @login_manager.user_loader
 def get_user(ident):
   return Users.query.get(int(ident))
@@ -151,7 +153,7 @@ def addArea():
     db.session.commit()
     return redirect(url_for("myprofil"))
 
-"""@app.route("/appointment_comment/<string:id>")
+@app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
@@ -165,7 +167,7 @@ def app_comm(id):
         print(newCommentCom)
         db.session.add(newComment)
         db.session.commit()
-        return redirect(url_for("appointment"))"""
+        return redirect(url_for("appointment"))
 
 @app.route("/editFootballArea")
 def editFootballArea():
@@ -201,8 +203,7 @@ def bookAppointment(id):
     comments = comment.query.all()
     users = Users.query.all()
     return render_template("book_Appointment.html",area=area, comments=comments, users = users)
-
-"""@app.route("/addComment/<string:id>",methods=['GET','POST'])    
+@app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
@@ -226,7 +227,7 @@ def addComment(id):
     db.session.commit()
     comments = comment.query.all()
     users = Users.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments, users=users)"""
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
