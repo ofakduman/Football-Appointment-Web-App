@@ -67,20 +67,20 @@ def searchCity():
 
 @app.route("/myprofil")
 def myprofil():
-    global currentUser
-    if current_user == None:
-        return redirect(url_for("signin"))
-
-    user = current_user
+    
+    if current_user.is_authenticated==0:
+        return redirect(url_for('signin'))
+    
+    
     areas = FootballArea.query.all()
-    pp = Img.query.filter_by(users_id =currentUser).first()
+    pp = Img.query.filter_by(users_id =current_user.id).first()
     
     if pp:
         image = pp.img
     if not pp:
         image = -1 #-1 is a magic number to represent not found image
 
-    return render_template("myprofil.html", user = user,areas=areas, image = image)
+    return render_template("myprofil.html", user = current_user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -151,7 +151,7 @@ def addArea():
     db.session.commit()
     return redirect(url_for("myprofil"))
 
-@app.route("/appointment_comment/<string:id>")
+"""@app.route("/appointment_comment/<string:id>")
 def appointment_comment(id):
     area = FootballArea.query.filter_by(id = id).first()
     return render_template("appointment_comment.html",area=area)    
@@ -165,7 +165,7 @@ def app_comm(id):
         print(newCommentCom)
         db.session.add(newComment)
         db.session.commit()
-        return redirect(url_for("appointment"))
+        return redirect(url_for("appointment"))"""
 
 @app.route("/editFootballArea")
 def editFootballArea():
@@ -202,7 +202,7 @@ def bookAppointment(id):
     users = Users.query.all()
     return render_template("book_Appointment.html",area=area, comments=comments, users = users)
 
-@app.route("/addComment/<string:id>",methods=['GET','POST'])    
+"""@app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
     an = datetime.now()
@@ -226,7 +226,7 @@ def addComment(id):
     db.session.commit()
     comments = comment.query.all()
     users = Users.query.all()
-    return render_template("book_Appointment.html",area=area,comments=comments, users=users)
+    return render_template("book_Appointment.html",area=area,comments=comments, users=users)"""
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
