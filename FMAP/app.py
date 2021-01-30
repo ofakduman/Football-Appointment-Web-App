@@ -149,7 +149,21 @@ def addArea():
     db.session.commit()
     return redirect(url_for("myprofil"))
 
+@app.route("/appointment_comment/<string:id>")
+def appointment_comment(id):
+    area = FootballArea.query.filter_by(id = id).first()
+    return render_template("appointment_comment.html",area=area)    
 
+@app.route("/app_comm/<string:id>",methods = ["POST"])
+def app_comm(id):
+    if request.method == 'POST':
+        area = FootballArea.query.filter_by(id = id).first()
+        newCommentCom = request.form.get("Com")
+        newComment = Comment(owner_Com = id,Com = newCommentCom)
+        print(newCommentCom)
+        db.session.add(newComment)
+        db.session.commit()
+        return redirect(url_for("appointment"))
 
 @app.route("/editFootballArea")
 def editFootballArea():
