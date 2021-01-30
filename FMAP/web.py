@@ -4,27 +4,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 from werkzeug.utils import secure_filename
 import base64   #to convert string (blob database) to picture
-from flask_login import login_user, current_user, logout_user, login_required,LoginManager
-from flask_login import LoginManager
-from flask.ext.login import UserMixin
+
+
 
 app = Flask(__name__) 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pfhfcvdsbaiijf:ffb41713a5a78f65ecd23b24086edec25a1ca22569a29e214639ab1e6b2e1d83@ec2-107-23-191-123.compute-1.amazonaws.com:5432/da6oja5nrlotcv'
 db=SQLAlchemy(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-login_manager.login_view = 'login'
 currentEnablet = True
 currentEnablef = True
 currentUser = 0         
 user_DataBase_size = 25
 
-@login_manager.user_loader
-def get_user(ident):
-  return Users.query.get(int(ident))
 def setCurrentUser(id):
     global currentUser
     currentUser = id
@@ -46,7 +38,6 @@ def signup():
 @app.route("/signout")
 def signout():
     global currentUser
-    logout_user()
     currentUser = 0
     return render_template("signin.html")
 
@@ -69,20 +60,20 @@ def searchCity():
 
 @app.route("/myprofil")
 def myprofil():
-    
-    if current_user.is_authenticated==0:
-        return redirect(url_for('signin'))
-    
-    
+    global currentUser
+    if currentUser == 0:
+        return redirect(url_for("signin"))
+
+    user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
-    pp = Img.query.filter_by(users_id =current_user.id).first()
+    pp = Img.query.filter_by(users_id =currentUser).first()
     
     if pp:
         image = pp.img
     if not pp:
         image = -1 #-1 is a magic number to represent not found image
 
-    return render_template("myprofil.html", user = current_user,areas=areas, image = image)
+    return render_template("myprofil.html", user = user,areas=areas, image = image)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -203,6 +194,7 @@ def bookAppointment(id):
     comments = comment.query.all()
     users = Users.query.all()
     return render_template("book_Appointment.html",area=area, comments=comments, users = users)
+
 @app.route("/addComment/<string:id>",methods=['GET','POST'])    
 def addComment(id):
     global currentUser
@@ -413,25 +405,15 @@ def signup_owner():
 @app.route("/signin_user", methods=["POST", "GET"])
 def signin_user():
     global currentUser
-    if current_user.is_authenticated:
-        print("BURDAAAA2")
-        username = request.form["nm"]
-        password = request.form["psw"]
-        user_check = Users.query.filter_by(username=username).first()
-        currentUser = user_check.id        
-        return redirect(url_for('myprofil'))
     if request.method == "POST":
         username = request.form["nm"]
         password = request.form["psw"]
         user_check = Users.query.filter_by(username=username).first()
-        print("BURDAAAA1")
         if user_check:
             if user_check.password == password:
-                print("BURDAAAA")
                 currentUser = user_check.id
         if user_check:
             if user_check.password == password:
-                login_user(user_check)
                 return redirect(url_for("myprofil")) #passing with userId to url for book appoinment
         flash("Invalid username or password !!!" , "error")
         return render_template("signin.html")
@@ -554,7 +536,7 @@ def upload_ap_add():
 
     return redirect(url_for("editFootballArea"))
 
-class Users(db.Model ,UserMixin):
+class Users(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(80))
     surname = db.Column(db.String(80))
