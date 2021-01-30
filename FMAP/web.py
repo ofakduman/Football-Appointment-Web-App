@@ -68,7 +68,7 @@ def searchCity():
 @app.route("/myprofil")
 def myprofil():
     global currentUser
-    if currentUser == 0:
+    if current_user == None:
         return redirect(url_for("signin"))
 
     user = current_user
