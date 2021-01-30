@@ -43,13 +43,14 @@ def signup():
 @app.route("/signout")
 def signout():
     global currentUser
+    logout_user()
     currentUser = 0
     return render_template("signin.html")
 
 @app.route("/appointment")
 def appointment():
     global currentUser
-    if currentUser == 0:                    #userId == 0 means there are no valid user  
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
         return render_template("signin.html", currentUser = currentUser)
     areas = FootballArea.query.all()
     return render_template("appointment.html",areas=areas,selection_city = "")
@@ -57,7 +58,7 @@ def appointment():
 @app.route("/appointment",methods = ["POST"])
 def searchCity():
     global currentUser
-    if currentUser == 0:                    #userId == 0 means there are no valid user  
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
         return render_template("signin.html", currentUser = currentUser)
     selection_city = (request.form.get("selection"))
     areas = FootballArea.query.all()
@@ -66,7 +67,7 @@ def searchCity():
 @app.route("/myprofil")
 def myprofil():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
@@ -83,7 +84,7 @@ def myprofil():
 @app.route("/myprofil/appointments")
 def myAppointments():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
@@ -95,7 +96,7 @@ def myAppointments():
     if not pp:
         image = -1 
     
-    return render_template("myAppointments.html", user = user,areas=areas, image = image)
+    return render_template("myAppointments.html", user = current_user,areas=areas, image = image)
 
     
 @app.route("/payment")
@@ -120,7 +121,7 @@ def signin():
 @app.route("/editMyProfil")
 def editMyProfil():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
@@ -135,7 +136,7 @@ def addFootballArea():
 def addArea():
     global currentUser
     user = Users.query.filter_by(id = currentUser).first()
-    OwnerName = user.name
+    OwnerName = current_user.name
     AreaName = request.form.get("area_name")
     City = request.form.get("city")
     adress = request.form.get("adress")
@@ -169,7 +170,7 @@ def app_comm(id):
 def editFootballArea():
     global currentUser
     user = Users.query.filter_by(id = currentUser).first()
-    id = user.football_areas[0].id
+    id = current_user.football_areas[0].id
     area = FootballArea.query.filter_by(id = id).first()
 
     return render_template("editFootballArea.html",area=area)
@@ -178,7 +179,7 @@ def editFootballArea():
 def editArea():
     global currentUser
     user = Users.query.filter_by(id = currentUser).first()
-    id = user.football_areas[0].id
+    id = current_user.football_areas[0].id
     area = FootballArea.query.filter_by(id = id).first()
 
     area.AreaName = request.form.get("area_name")
@@ -212,8 +213,8 @@ def addComment(id):
         return redirect(url_for("appointment"))
 
     owner_Com = area.id
-    owner_Id = user.id
-    owner_User = user.name
+    owner_Id = current_user.id
+    owner_User = current_user.name
     owner_Y = an.year
     owner_M = an.month
     owner_D = an.day
@@ -378,11 +379,11 @@ def edit_profile():
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
-    user.name = request.form.get("name")
-    user.username = request.form.get("username")
-    user.password = request.form.get("password")
-    user.email = request.form.get("email")
-    user.phoneNumber = request.form.get("phoneNumber")
+    current_user.name = request.form.get("name")
+    current_user.username = request.form.get("username")
+    current_user.password = request.form.get("password")
+    current_user.email = request.form.get("email")
+    current_user.phoneNumber = request.form.get("phoneNumber")
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
 
