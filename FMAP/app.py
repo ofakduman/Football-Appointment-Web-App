@@ -364,7 +364,7 @@ def edit_profile():
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
 
-    if user.password != pass1:
+    if current_user.password != pass1:
         return redirect(url_for("editMyProfil"))
     db.session.commit()
 
