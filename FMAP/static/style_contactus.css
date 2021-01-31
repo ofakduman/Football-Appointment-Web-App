@@ -242,7 +242,7 @@ nav{
   }
   nav .logo{
     float: left;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 27px;
     font-weight: 600;
     line-height: 70px;
@@ -257,7 +257,7 @@ nav{
   nav ul li{
     float: left;
     display: inline-block;
-    background: #1b1b1b;
+    background: #000000;
     margin: 0 5px;
   }
   nav ul li a{
