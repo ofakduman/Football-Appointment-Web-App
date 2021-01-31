@@ -378,11 +378,11 @@ def edit_profile():
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
-    user.name = request.form.get("name")
-    user.username = request.form.get("username")
-    user.password = request.form.get("password")
-    user.email = request.form.get("email")
-    user.phoneNumber = request.form.get("phoneNumber")
+    current_user.name = request.form.get("name")
+    current_user.username = request.form.get("username")
+    current_user.password = request.form.get("password")
+    current_user.email = request.form.get("email")
+    current_user.phoneNumber = request.form.get("phoneNumber")
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
 
