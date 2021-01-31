@@ -5,9 +5,12 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.utils import secure_filename
 import base64   #to convert string (blob database) to picture
 
+UPLOAD_FOLDER = '/path/to/the/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 app = Flask(__name__) 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pfhfcvdsbaiijf:ffb41713a5a78f65ecd23b24086edec25a1ca22569a29e214639ab1e6b2e1d83@ec2-107-23-191-123.compute-1.amazonaws.com:5432/da6oja5nrlotcv'
 db = SQLAlchemy(app)
@@ -66,20 +69,12 @@ def searchCity():
 
 @app.route("/myprofil")
 def myprofil():
-    global currentUser
     if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
-    user = Users.query.filter_by(id = currentUser).first()
     areas = FootballArea.query.all()
-    pp = Img.query.filter_by(users_id =currentUser).first()
-    
-    if pp:
-        image = pp.img
-    if not pp:
-        image = -1 #-1 is a magic number to represent not found image
 
-    return render_template("myprofil.html", user = current_user,areas=areas, image = image)
+    return render_template("myprofil.html", user = current_user,areas=areas)
 
 @app.route("/myprofil/appointments")
 def myAppointments():
@@ -124,7 +119,6 @@ def editMyProfil():
     if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
-    user = Users.query.filter_by(id = currentUser).first()
     return render_template("editMyProfil.html",user = current_user)
 
 @app.route("/addFootballArea")
@@ -177,8 +171,9 @@ def editFootballArea():
 
 @app.route("/editArea",methods = ["POST"])
 def editArea():
-    global currentUser
-    user = Users.query.filter_by(id = currentUser).first()
+    if current_user.is_authenticated==0:
+        return redirect(url_for("signin"))
+
     id = current_user.football_areas[0].id
     area = FootballArea.query.filter_by(id = id).first()
 
@@ -186,8 +181,7 @@ def editArea():
     area.City = request.form.get("city")
     area.adress = request.form.get("adress")
     area.OwnerNumber = request.form.get("owner_number")
-    user.phoneNumber = area.OwnerNumber
-    area.img1 
+    current_user.phoneNumber = area.OwnerNumber
 
     db.session.commit()
 
@@ -363,11 +357,9 @@ def signup_user():
     email = request.form.get("email")
     password = request.form.get("password")
     newUser = Users(name = name,surname = surname,username=username,email = email,password = password, user_type = 0)
-    #newComment=comment(Com="Bos",owner_Com="1",owner_User="None",Year=1,Month=1,Day=1,Hour=1,Minute=2)
     if Check_User(username) == False :
         return redirect(url_for("signup"))
     db.session.add(newUser)
-    #db.session.add(newComment)
     db.session.commit()
     return redirect(url_for("signin"))
 
@@ -387,7 +379,6 @@ def edit_profile():
     pass1 = "a" 
     pass1 = request.form.get("confirmpassword")
 
-    #picture = FileField('Update Profile Picture', validators = [FileAllowed(['jpg', 'png'])])
     if user.password != pass1:
         return redirect(url_for("editMyProfil"))
     db.session.commit()
@@ -437,51 +428,34 @@ def get_img(id):
 
 @app.route('/upload_pp', methods = ['POST'])
 def upload():
-    print('kkkkkkkkkkkkkkkkkkkkkkkk')
-    print('kkkkkkkkkkkkkkkkkkkkkkkk')
-    print('kkkkkkkkkkkkkkkkkkkkkkkk')
-    print('kkkkkkkkkkkkkkkkkkkkkkkk')
+
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
+        return render_template("signin.html")
 
     pic = request.files['pic']
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     if not pic:
         return 'no pic uploaded' , 400
 
-    user = Users.query.filter_by(id = currentUser).first()
-    if not user:
-        return 'no user' , 400
-
     filename = secure_filename(pic.filename)
-    mimetype = pic.mimetype
+
     img = pic.read()
-
     img = base64.b64encode(img).decode('ascii')
-    #img = img.decode('utf-8')
-    user.pp = img
 
-    image = Img.query.filter_by(users_id = currentUser).first()
+    current_user.pp = img
+    db.session.commit()
 
-    if not image:
-        image = Img(img = img, mimetype = mimetype, name = filename, users = user)
-        db.session.add(image)
-        db.session.commit()
-        #return 'Img has been uploaded', 200
-        return redirect(url_for("myprofil"))
+    return redirect(url_for("myprofil"))
 
-    if image:
-        image.img = img
-        image.mimetype = mimetype
-        image.name = filename
-        db.session.commit()
-        #flash("Photo Uploaded" , "200")
-        return redirect(url_for("myprofil"))
 
 @app.route('/upload_ap', methods = ['POST'])
 def upload_ap():
 
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
+        return render_template("signin.html")
+
     pic = request.files['pic']
-    area = FootballArea.query.filter_by(users_id = currentUser).first()
+    area = FootballArea.query.filter_by(users_id = current_user.id).first()
 
     if not pic:
         return 'no pic uploaded' , 400
@@ -490,20 +464,13 @@ def upload_ap():
     if not area:
         return 'no area found' , 400
 
-    user = Users.query.filter_by(id = currentUser).first()
-    if not user:
-        return 'no user' , 400
 
     filename = secure_filename(pic.filename)
-    mimetype = pic.mimetype
     img = pic.read()
 
     img = base64.b64encode(img).decode('ascii')
-    #img = img.decode('utf-8')
 
-    #if area.img1 == "none":
     area.img1 = img
-
 
     db.session.commit()
 
@@ -511,10 +478,11 @@ def upload_ap():
 
 @app.route('/upload_ap_add', methods = ['POST'])
 def upload_ap_add():
-
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
+        return render_template("signin.html")
 
     pic = request.files['pic']
-    area = FootballArea.query.filter_by(users_id = currentUser).first()
+    area = FootballArea.query.filter_by(users_id = current_user.id).first()
 
     if not pic:
         return 'no pic uploaded' , 400
@@ -522,9 +490,6 @@ def upload_ap_add():
     if not area:
         return 'no area found' , 400
 
-    user = Users.query.filter_by(id = currentUser).first()
-    if not user:
-        return 'no user' , 400
 
     filename = secure_filename(pic.filename)
     mimetype = pic.mimetype
@@ -535,7 +500,6 @@ def upload_ap_add():
 
     if area.img1 == "none":
         area.img1 = img
-
 
     elif area.img2 == "none":
         area.img2 = img

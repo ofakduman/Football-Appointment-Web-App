@@ -49,12 +49,14 @@
         <h3 style="color:white;">Edit Football Area</h3>
           {% if area.img1 != "none"  %}
               <img src="data:;base64,{{ area.img1 }}" alt="" height="150" width="200"/>
-            <form action="http://localhost:5000/upload_ap" enctype="multipart/form-data" method="POST">
-            <input type="file" name="pic"/>
-            <button class="btn btn-primary" input type="submit" name="upload a file"/>
-              <i class="fa fa-fw fa-camera"></i>
-              <span>Change Photo</span>
-            </button>
+
+               <form class="form" novalidate="" action="/upload_ap" method="POST" enctype=multipart/form-data >
+                  <input type="file" name="pic"/>
+                  <button class="btn btn-primary" input type="submit" value=Upload name="upload a file"/>
+                  <i class="fa fa-fw fa-camera"></i>
+                  <span>Change Photo</span>
+                  </button>
+               </form>
           </form>                  
           {% endif %}
            {% if area.img2 != "none"  %}
@@ -70,13 +72,13 @@
               <img src="/static/images/halısaha2.jpg" alt="" height="175" width="175" /> 
           {% endif %}
           {% if area.img4 == "none"  %}
-            <form action="http://localhost:5000/upload_ap_add" enctype="multipart/form-data" method="POST">
-            <input type="file" name="pic"/>
-            <button class="btn btn-primary" input type="submit" name="upload a file"/>
+             <form class="form" novalidate="" action="/upload_ap_add" method="POST" enctype=multipart/form-data >
+              <input type="file" name="pic"/>
+              <button class="btn btn-primary" input type="submit" value=Upload name="upload a file"/>
               <i class="fa fa-fw fa-camera"></i>
-              <span>Add an Area Photo</span>
-            </button>
-          </form>
+              <span>Add Photo</span>
+              </button>
+            </form>
           {% endif %}
           
         <form action="/editArea" method="POST">
