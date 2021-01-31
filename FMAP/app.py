@@ -263,42 +263,42 @@ def fillcurrentclock(id,clock):
     user = Users.query.filter_by(id = currentUser).first()
     area = FootballArea.query.filter_by(id = id).first()
     if clock == 0:
-        area.clocks[0].c10 = user.id
+        area.clocks[0].c10 = current_user.id
     if clock == 1:
-        area.clocks[0].c11 = user.id
+        area.clocks[0].c11 = current_user.id
     if clock == 2:
-        area.clocks[0].c12 = user.id
+        area.clocks[0].c12 = current_user.id
     if clock == 3:
-        area.clocks[0].c13 = user.id
+        area.clocks[0].c13 = current_user.id
     if clock == 4:
-        area.clocks[0].c14 = user.id
+        area.clocks[0].c14 = current_user.id
     if clock == 5:
-        area.clocks[0].c15 = user.id
+        area.clocks[0].c15 = current_user.id
     if clock == 6:
-        area.clocks[0].c16 = user.id
+        area.clocks[0].c16 = current_user.id
     if clock == 7:
-        area.clocks[0].c17 = user.id
+        area.clocks[0].c17 = current_user.id
     if clock == 8:
-        area.clocks[0].c18 = user.id
+        area.clocks[0].c18 = current_user.id
     if clock == 9:
-        area.clocks[0].c19 = user.id
+        area.clocks[0].c19 = current_user.id
     if clock == 10:
-        area.clocks[0].c20 = user.id
+        area.clocks[0].c20 = current_user.id
     if clock == 11:
-        area.clocks[0].c21 = user.id
+        area.clocks[0].c21 = current_user.id
     if clock == 12:
-        area.clocks[0].c22 = user.id
+        area.clocks[0].c22 = current_user.id
     if clock == 13:
-        area.clocks[0].c23 = user.id
+        area.clocks[0].c23 = current_user.id
     if clock == 14:
-        area.clocks[0].c24 = user.id
+        area.clocks[0].c24 = current_user.id
         
     db.session.commit()
     return redirect(url_for("payment"))
 @app.route("/cancelAppointment/<string:id>/<int:clock>")
 def cancelAppointment(id,clock):
     global currentUser
-    user = Users.query.filter_by(id = currentUser).first()
+    
     area = FootballArea.query.filter_by(id = id).first()
     if clock == 0:
         area.clocks[0].c10 = 0
