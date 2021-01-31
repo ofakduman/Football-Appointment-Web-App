@@ -125,7 +125,7 @@ def editMyProfil():
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
-    return render_template("editMyProfil.html",user = user)
+    return render_template("editMyProfil.html",user = current_user)
 
 @app.route("/addFootballArea")
 def addFootballArea():
