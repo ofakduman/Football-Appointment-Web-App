@@ -128,16 +128,17 @@ def addFootballArea():
 
 @app.route("/addArea",methods = ["POST"])
 def addArea():
-    global currentUser
-    user = Users.query.filter_by(id = currentUser).first()
+    if current_user.is_authenticated==0:
+        return redirect(url_for("signin"))
+
     OwnerName = current_user.name
     AreaName = request.form.get("area_name")
     City = request.form.get("city")
     adress = request.form.get("adress")
     OwnerNumber = request.form.get("owner_number")
-    user.phoneNumber = OwnerNumber
-    owner_name = user.name   
-    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = user,LikeCoun=0)
+    current_user.phoneNumber = OwnerNumber
+    owner_name = current_user.name   
+    newArea = FootballArea(OwnerName = OwnerName,AreaName = AreaName,OwnerNumber=OwnerNumber,City = City,adress=adress, users = current_user,LikeCoun=0)
     newClock = Clocks(c10 = 0,owner_area = newArea, c11 = 0,c12 = 0,c13 = 0,c14 = 0,c15 = 0,c16 = 0,c17 = 0,c18 = 0,c19 = 0,c20 = 0,c21 = 0, c22 = 0,c23 = 0,c24 = 0)
     db.session.add(newArea)
     db.session.add(newClock)
