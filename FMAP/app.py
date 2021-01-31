@@ -224,33 +224,17 @@ def addComment(id):
 
 @app.route("/incrementlike/<int:curent_id>")
 def incrementlike(curent_id):
-    global currentUser
-    global currentEnablef
-    global currentEnablet
-    if currentEnablet == True :
-        area = FootballArea.query.filter_by(id = curent_id).first()
-        area.LikeCoun +=1
-        db.session.commit()
-        currentEnablet = False ;
-        currentEnablef = True  
-        return redirect(url_for("appointment"))
-    else :
-        return redirect(url_for("appointment"))
-
+    area = FootballArea.query.filter_by(id = curent_id).first()
+    area.LikeCoun +=1
+    db.session.commit()
+    return redirect(url_for("appointment"))
+    
 @app.route("/decrementlike/<int:curent_id>")
 def decrementlike(curent_id):
-    global currentUser
-    global currentEnablet
-    global currentEnablef
-    if currentEnablef == True : 
-        area = FootballArea.query.filter_by(id = curent_id).first()
-        area.LikeCoun -=1
-        db.session.commit()
-        currentEnablef = False
-        currentEnablet = True
-        return redirect(url_for("appointment"))
-    else :
-        return redirect(url_for("appointment"))
+    area = FootballArea.query.filter_by(id = curent_id).first()
+    area.LikeCoun -=1
+    db.session.commit()
+    return redirect(url_for("appointment"))
 
 @app.route("/fillcurrentclock/<string:id>/<int:clock>")
 def fillcurrentclock(id,clock):
