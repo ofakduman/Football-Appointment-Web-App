@@ -368,8 +368,8 @@ def signup_user():
 def edit_profile():
     
     global currentUser
-    if currentUser == 0:
-        return redirect(url_for("signin"))
+    if current_user.is_authenticated==0:                    #userId == 0 means there are no valid user  
+        return render_template("signin.html")
 
     user = Users.query.filter_by(id = currentUser).first()
     current_user.name = request.form.get("name")
