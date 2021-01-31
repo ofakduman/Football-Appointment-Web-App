@@ -437,7 +437,13 @@ def get_img(id):
 
 @app.route('/upload_pp', methods = ['POST'])
 def upload():
+    print('kkkkkkkkkkkkkkkkkkkkkkkk')
+    print('kkkkkkkkkkkkkkkkkkkkkkkk')
+    print('kkkkkkkkkkkkkkkkkkkkkkkk')
+    print('kkkkkkkkkkkkkkkkkkkkkkkk')
+
     pic = request.files['pic']
+    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaa')
 
     if not pic:
         return 'no pic uploaded' , 400
@@ -505,6 +511,7 @@ def upload_ap():
 
 @app.route('/upload_ap_add', methods = ['POST'])
 def upload_ap_add():
+
 
     pic = request.files['pic']
     area = FootballArea.query.filter_by(users_id = currentUser).first()
@@ -612,6 +619,7 @@ class Clocks(db.Model):
     c23 = db.Column(db.Integer, default = 0)
     c24 = db.Column(db.Integer, default = 0)
 if __name__ == "__main__":
+    app.run(host='0.0.0.0')
     db.create_all()
     app.run(debug=True)
 
