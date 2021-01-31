@@ -159,7 +159,7 @@ def app_comm(id):
     if request.method == 'POST':
         area = FootballArea.query.filter_by(id = id).first()
         newCommentCom = request.form.get("Com")
-        newComment = Comment(owner_Com = id,Com = newCommentCom)
+        newComment = comment(owner_Com = id,Com = newCommentCom)
         print(newCommentCom)
         db.session.add(newComment)
         db.session.commit()
