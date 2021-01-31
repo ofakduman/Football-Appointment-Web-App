@@ -19,11 +19,19 @@ body{
 }
 
 nav{
-    background: #1b1b1b;
+    background: #000000;
     position: fixed; /* Set the navbar to fixed position */
     left: 0;
     top: 0; /* Position the navbar at the bottom of the page */
     width: 100%; /* Full width */
+  }
+  .Image4{
+    position: ;
+    border: solid;
+    top: 5%;
+    left: 20%;
+    height: 100px;
+    width: 100px;
   }
   nav:after{
     content: '';

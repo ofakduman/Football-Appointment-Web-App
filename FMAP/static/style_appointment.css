@@ -155,8 +155,16 @@ body{
 }
 
 nav{
-  background: #1b1b1b;
+  background: #000000;
   width:auto;
+}
+.Image4{
+  position: ;
+  border: solid;
+  top: 5%;
+  left: 20%;
+  height: 100px;
+  width: 100px;
 }
 nav:after{
   content: '';
