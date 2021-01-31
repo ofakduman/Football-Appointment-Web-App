@@ -120,7 +120,7 @@ def signin():
 @app.route("/editMyProfil")
 def editMyProfil():
     global currentUser
-    if currentUser == 0:
+    if current_user.is_authenticated==0:
         return redirect(url_for("signin"))
 
     user = Users.query.filter_by(id = currentUser).first()
